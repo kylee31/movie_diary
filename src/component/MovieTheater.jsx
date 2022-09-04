@@ -6,9 +6,10 @@ const Box = styled.div`
     background-color:white;
     border-radius:20px;
     width:300px;
-    height:280px;
+    height:260px;
     text-align:center;
     padding:10px;
+    border:1px solid grey;
 `;
 
 const Screen = styled.div`
@@ -31,18 +32,27 @@ function MovieTheater({ thema }) {
 
     //thema로 받아와서 css 변경하기
 
+    const themaseat=thema.concat("seat");
     const [selectedSeat, setSelectedSeat] = useState();
 
     return (
         <Box>
+            <br/>
             <Screen className={thema}>screen</Screen><br />
-            <table style={{margin:"auto"}}>
+            <table style={{ margin: "auto" }}>
                 <tbody>
-                    <tr>
-                    {dummy.data.map((seat) => {
-                        return <Seat key={seat.id} className={thema}>{seat.id}</Seat>
+                    {dummy.data.map((seat, index) => {
+                        return <tr key={index}>{dummy.data[index].seat.map((seat) => {
+                            if (seat.id === 2 ||seat.id===6) {
+                                return <Seat style={{marginRight:"15px"}} key={seat.id} className={themaseat} onClick={()=>{
+                                    console.log(index,seat.id);
+                                }}></Seat>
+                            }
+                            else {
+                                return <Seat key={seat.id} className={themaseat}></Seat>
+                            }
+                        })}</tr>;
                     })}
-                    </tr>
                 </tbody>
             </table>
         </Box>

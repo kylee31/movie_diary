@@ -2,18 +2,23 @@
     margin:0;
     padding:0;
 }
-.cgv{
+.cgv, .cgvseat{
     background-color:brown;
 }
-.lotte{
+.lotte, .lotteseat{
     background-color:rgb(230, 37, 20);
 }
-.mega{
+.mega, .megaseat{
     background-color:rgb(108, 41, 232);
 }
-.inde{
+.inde, .indeseat{
     background-color:rgb(237, 227, 29);
 }
-.home{
-    background-color:rgb(27, 207, 66);
+.cgvseat:hover,.lotteseat:hover,.megaseat:hover,.indeseat:hover{
+    background-color:rgb(105, 105, 105);
+}
+
+.cgvimg{
+    background-image:url('db/cgv.png');
+    background-size: cover;
 }

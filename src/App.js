@@ -21,14 +21,10 @@ const AppDiv = styled.div`
 function App() {
   return (
     <BrowserRouter>
-      <Container>
-        <AppDiv>
-          <Routes>
-            <Route index path="/" element={<Header/>}/>
-            <Route path="/add_movie_diary" element={<MovieDiary/>}/>
-          </Routes>
-        </AppDiv>
-      </Container>
+      <Routes>
+        <Route index path="/" element={<Header />} />
+        <Route path="/add_movie_diary" element={<MovieDiary />} />
+      </Routes>
     </BrowserRouter>
   );
 }
