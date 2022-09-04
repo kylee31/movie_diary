@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import styled from 'styled-components';
+import Header from './component/Header';
+import MovieDiary from './component/MovieDiary';
+
+const Container = styled.div`
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+`;
+
+const AppDiv = styled.div`
+  width:650px;
+  height:500px;
+  background-color:lightgrey;
+  border-radius:50px;
+  padding:20px;
+`;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Container>
+        <AppDiv>
+          <Routes>
+            <Route index path="/" element={<Header/>}/>
+            <Route path="/add_movie_diary" element={<MovieDiary/>}/>
+          </Routes>
+        </AppDiv>
+      </Container>
+    </BrowserRouter>
   );
 }
 
