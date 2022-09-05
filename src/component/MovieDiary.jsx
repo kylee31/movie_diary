@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import {Link} from 'react-router-dom';
 import styled from "styled-components";
 import MovieTheater from "./MovieTheater";
 import img1 from "../db/img1.png";
@@ -111,6 +112,7 @@ function MovieDiary() {
         <Container>
             <AppDiv className={themaImg}>
                 <header style={{ display: "flex", justifyContent: "center" }}>
+                    <span style={{fontWeight:"900",marginRight:"140px"}}><Link to="/" style={{ textDecoration: 'none', color:"black"}}>🎬영화일기</Link></span>
                     <label>{day} <input type="date" onChange={date} /></label>
                     <select onChange={selectThema}>
                         <option value="cgv">CGV</option>
