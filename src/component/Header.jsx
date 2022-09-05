@@ -4,24 +4,13 @@ import { useNavigate } from "react-router-dom";
 const Button = styled.button`
     float:right;
     width:100px;
-    heigth:50px;
+    height:30px;
     background-color:blue;
     color:white;
+    border:0;
+    border-radius:10px;
+    font-weight:900;
 `
-const Container = styled.div`
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-`;
-
-const AppDiv = styled.div`
-  width:650px;
-  height:500px;
-  background-color:lightgrey;
-  border-radius:50px;
-  padding:20px;
-`;
 
 function Header() {
 
@@ -32,12 +21,10 @@ function Header() {
     }
 
     return (
-        <Container>
-            <AppDiv>
-                <h1>🎬영화일기</h1>
-                <Button onClick={onClick}>추가</Button>
-            </AppDiv>
-        </Container>
+        <div style={{padding:"15px"}}>
+            <span style={{fontSize:"1.3rem",fontWeight:"900"}}>🎬영화일기</span>
+            <Button onClick={onClick}>일기 작성</Button>
+        </div>
     );
 }
 

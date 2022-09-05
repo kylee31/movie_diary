@@ -33,7 +33,7 @@ function MovieTheater({ thema }) {
     //thema로 받아와서 css 변경하기
 
     const themaseat=thema.concat("seat");
-    const [selectedSeat, setSelectedSeat] = useState();
+    const [selectedSeat, setSelectedSeat] = useState("");
 
     return (
         <Box>
@@ -44,12 +44,16 @@ function MovieTheater({ thema }) {
                     {dummy.data.map((seat, index) => {
                         return <tr key={index}>{dummy.data[index].seat.map((seat) => {
                             if (seat.id === 2 ||seat.id===6) {
-                                return <Seat style={{marginRight:"15px"}} key={seat.id} className={themaseat} onClick={()=>{
-                                    console.log(index,seat.id);
+                                return <Seat style={{marginRight:"15px",backgroundColor:selectedSeat===String(index)+String(seat.id)&&"grey"}} key={String(index)+String(seat.id)} className={themaseat} onClick={()=>{
+                                    console.log(String(index)+String(seat.id));
+                                    selectedSeat===""?setSelectedSeat(String(index)+String(seat.id)):setSelectedSeat("");
                                 }}></Seat>
                             }
                             else {
-                                return <Seat key={seat.id} className={themaseat}></Seat>
+                                return <Seat style={{backgroundColor:selectedSeat===String(index)+String(seat.id)&&"grey"}} key={String(index)+String(seat.id)} className={themaseat} onClick={()=>{
+                                    console.log(String(index)+String(seat.id));
+                                    selectedSeat===""?setSelectedSeat(String(index)+String(seat.id)):setSelectedSeat("");
+                                }}></Seat>
                             }
                         })}</tr>;
                     })}
