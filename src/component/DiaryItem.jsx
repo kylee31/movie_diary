@@ -8,11 +8,14 @@ const Item=styled.div`
     width:270px;
     height:180px;
     border-radius:15px;
-    margin:20px;
+    margin:23px;
+    color:white;
+    font-weight:900;
 `
 
 function DiaryItem({thema,img,date,id}){
 
+    //65 50 
     const navigate=useNavigate();
 
     function onClick(){
@@ -21,7 +24,7 @@ function DiaryItem({thema,img,date,id}){
 
     return(
         <Item className={thema} onClick={onClick}>
-            <img style={{width:"100px",height:"140px",marginRight:"20px"}} src={img} alt=""/>
+            <img style={{width:"100px",height:"140px",marginRight:"30px"}} src={img} alt=""/>
             {date}
         </Item>
     );

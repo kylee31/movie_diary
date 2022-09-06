@@ -3,16 +3,16 @@
     padding:0;
 }
 .cgv, .cgvseat{
-    background-color:brown;
+    background-color:#E41A12;
 }
 .lotte, .lotteseat{
-    background-color:rgb(230, 37, 20);
+    background-color:#c53535;
 }
 .mega, .megaseat{
-    background-color:rgb(108, 41, 232);
+    background-color:#3d2a76;
 }
 .inde, .indeseat{
-    background-color:rgb(237, 227, 29);
+    background-color:#f4d322;
 }
 .cgvseat:hover,.lotteseat:hover,.megaseat:hover,.indeseat:hover{
     background-color:rgb(105, 105, 105);
@@ -22,9 +22,27 @@
 }
 
 .cgvimg{
-    background-image:url('db/cgv.png');
+    background-size: cover;
+    box-shadow: 0 0 0 12px #E41A12 inset;
+}
+.lotteimg{
+    box-shadow: 0 0 0 12px #c53535 inset;
     background-size: cover;
 }
+.megaimg{
+    box-shadow: 0 0 0 12px #3d2a76 inset;
+    background-size: cover;
+}
+.indeimg{
+    box-shadow: 0 0 0 12px #f4d322 inset;
+    background-size: cover;
+}
+.homeimg{
+    /*background-image:url('db/home.png');*/
+    box-shadow: 0 0 0 12px #199831 inset;
+    background-size: cover;
+}
+
 
 input[type=text]{
     text-align: center;

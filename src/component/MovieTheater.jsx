@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import dummy from "../db/data.json";
 
@@ -10,6 +10,7 @@ const Box = styled.div`
     text-align:center;
     padding:10px;
     border:1px solid grey;
+    margin-left: 50px; 
 `;
 
 const Screen = styled.div`
@@ -28,12 +29,14 @@ const Seat = styled.td`
     margin:2px;
 `
 
-function MovieTheater({ thema }) {
+function MovieTheater({thema,onSeat,myseat}) {
 
     //thema로 받아와서 css 변경하기
 
     const themaseat=thema.concat("seat");
-    const [selectedSeat, setSelectedSeat] = useState("");
+    const [selectedSeat, setSelectedSeat] = useState(myseat);
+
+    console.log();
 
     return (
         <Box>
@@ -45,14 +48,26 @@ function MovieTheater({ thema }) {
                         return <tr key={index}>{dummy.data[index].seat.map((seat) => {
                             if (seat.id === 2 ||seat.id===6) {
                                 return <Seat style={{marginRight:"15px",backgroundColor:selectedSeat===String(index)+String(seat.id)&&"grey"}} key={String(index)+String(seat.id)} className={themaseat} onClick={()=>{
-                                    console.log(String(index)+String(seat.id));
-                                    selectedSeat===""?setSelectedSeat(String(index)+String(seat.id)):setSelectedSeat("");
+                                    if(selectedSeat===""){
+                                        setSelectedSeat(String(index)+String(seat.id));
+                                        onSeat(String(index)+String(seat.id));
+                                    }
+                                    else{
+                                        setSelectedSeat("");
+                                        onSeat("");
+                                    }
                                 }}></Seat>
                             }
                             else {
                                 return <Seat style={{backgroundColor:selectedSeat===String(index)+String(seat.id)&&"grey"}} key={String(index)+String(seat.id)} className={themaseat} onClick={()=>{
-                                    console.log(String(index)+String(seat.id));
-                                    selectedSeat===""?setSelectedSeat(String(index)+String(seat.id)):setSelectedSeat("");
+                                    if(selectedSeat===""){
+                                        setSelectedSeat(String(index)+String(seat.id));
+                                        onSeat(String(index)+String(seat.id));
+                                    }
+                                    else{
+                                        setSelectedSeat("");
+                                        onSeat("");
+                                    }
                                 }}></Seat>
                             }
                         })}</tr>;
