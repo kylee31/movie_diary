@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import dummy from "../db/data.json";
 
@@ -19,7 +19,7 @@ const Screen = styled.div`
     color:white;
     font-size:6px;
     margin:auto;
-`
+`;
 
 const Seat = styled.td`
     display:inline-block;
@@ -27,42 +27,43 @@ const Seat = styled.td`
     height:25px;
     border-radius:5px;
     margin:2px;
-`
+`;
 
-function MovieTheater({thema,onSeat,myseat,event}) {
+function MovieTheater({ thema, onSeat, myseat, event }) {
 
-    //thema로 받아와서 css 변경하기
-
-    const themaseat=thema.concat("seat");
+    const themaseat = thema.concat("seat");
     const [selectedSeat, setSelectedSeat] = useState(myseat);
 
+    useEffect(() => {
+        setSelectedSeat(myseat);
+    }, [myseat]);
+
     return (
-        <Box style={{pointerEvents:event===false?"none":"auto"}}>
-            <br/>
+        <Box style={{ pointerEvents: event === false ? "none" : "auto" }}><br />
             <Screen className={thema}>screen</Screen><br />
             <table style={{ margin: "auto" }}>
                 <tbody>
                     {dummy.data.map((seat, index) => {
                         return <tr key={index}>{dummy.data[index].seat.map((seat) => {
-                            if (seat.id === 2 ||seat.id===6) {
-                                return <Seat style={{marginRight:"15px",backgroundColor:selectedSeat===String(index)+String(seat.id)&&"grey"}} key={String(index)+String(seat.id)} className={themaseat} onClick={()=>{
-                                    if(selectedSeat===""){
-                                        setSelectedSeat(String(index)+String(seat.id));
-                                        onSeat(String(index)+String(seat.id));
+                            if (seat.id === 2 || seat.id === 6) {
+                                return <Seat style={{ marginRight: "15px", backgroundColor: selectedSeat === String(index) + String(seat.id) && "grey" }} key={String(index) + String(seat.id)} className={themaseat} onClick={() => {
+                                    if (selectedSeat === "") {
+                                        setSelectedSeat(String(index) + String(seat.id));
+                                        onSeat(String(index) + String(seat.id));
                                     }
-                                    else{
+                                    else {
                                         setSelectedSeat("");
                                         onSeat("");
                                     }
                                 }}></Seat>
                             }
                             else {
-                                return <Seat style={{backgroundColor:selectedSeat===String(index)+String(seat.id)&&"grey"}} key={String(index)+String(seat.id)} className={themaseat} onClick={()=>{
-                                    if(selectedSeat===""){
-                                        setSelectedSeat(String(index)+String(seat.id));
-                                        onSeat(String(index)+String(seat.id));
+                                return <Seat style={{ backgroundColor: selectedSeat === String(index) + String(seat.id) && "grey" }} key={String(index) + String(seat.id)} className={themaseat} onClick={() => {
+                                    if (selectedSeat === "") {
+                                        setSelectedSeat(String(index) + String(seat.id));
+                                        onSeat(String(index) + String(seat.id));
                                     }
-                                    else{
+                                    else {
                                         setSelectedSeat("");
                                         onSeat("");
                                     }

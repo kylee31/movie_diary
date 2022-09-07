@@ -11,11 +11,11 @@ const Item=styled.div`
     margin:20px;
     color:white;
     font-weight:900;
+    cursor:pointer;
 `
 
 function DiaryItem({thema,img,date,id}){
 
-    //65 50 
     const navigate=useNavigate();
 
     function onClick(){

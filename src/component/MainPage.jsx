@@ -24,6 +24,8 @@ const Box = styled.div`
   height:420px;
   overflow:auto;
   margin-left:15px;
+  scrollbar-width:thin;
+  scrollbar-color:black black;
 `;
 
 function MainPage() {
@@ -36,7 +38,7 @@ function MainPage() {
       <Container>
         <AppDiv>
           <Header />
-          <Box>
+          <Box className="box">
             {data.map((item, index) => {
               return <DiaryItem id={index} key={index} thema={item.thema} img={item.img} date={item.date} />
             })}

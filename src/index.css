@@ -39,7 +39,6 @@
     border:10px solid #199831;
 }
 
-
 input[type=text]{
     text-align: center;
     height:30px;
@@ -47,4 +46,15 @@ input[type=text]{
     border-radius: 10px;
     font-weight: 900;
     margin-right:5px;
+}
+
+.box::-webkit-scrollbar{
+    width:5px;
+}
+.box::-webkit-scrollbar-thumb {
+    background-color: rgb(120, 120, 120); /*스크롤바의 색상*/
+    border-radius: 10px;
+}
+.box::-webkit-scrollbar-track {
+    background-color:rgb(229, 229, 229); /*스크롤바 트랙 색상*/
 }

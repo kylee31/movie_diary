@@ -10,6 +10,7 @@ const Button = styled.button`
     border:0;
     border-radius:10px;
     font-weight:900;
+    cursor:pointer;
 `
 
 function Header() {
