@@ -23,6 +23,7 @@ const Box = styled.div`
   width:650px;
   height:420px;
   overflow:auto;
+  margin-left:15px;
 `;
 
 function MainPage() {

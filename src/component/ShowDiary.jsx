@@ -3,6 +3,7 @@ import { useLocation } from "react-router";
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import MovieTheater from "./MovieTheater";
+import html2canvas from "html2canvas";
 
 const Container = styled.div`
   height:100vh;
@@ -12,14 +13,14 @@ const Container = styled.div`
 `;
 
 const AppDiv = styled.div`
-  width:650px;
-  height:500px;
+  width:630px;
+  height:480px;
   border-radius:50px;
   padding:20px;
   overflow:auto;
 `;
 
-const Info = styled.div`
+const Info = styled.p`
 display:flex;
 justify-content:center;
 align-items:center;
@@ -62,7 +63,7 @@ function ShowDiary() {
 
   const themaImg = data[id].thema.concat("img");
 
-  //localstorage에서 데이터 가져와서 보여주기, 이미지 저장하는 버튼 만들기
+  //localstorage에서 데이터 삭제
   function removeData() {
     if (window.confirm("삭제하시겠습니까😮?")) {
       const newdata = data.filter((e, index) => {
@@ -73,25 +74,41 @@ function ShowDiary() {
     }
   }
 
+  //html2canvas
+  function onCapture(){
+    html2canvas(document.getElementById("capture")).then(canvas => {
+      onSave(canvas.toDataURL("image/png"),`movie-diary${id+1}.png`);
+  });
+  }
+
+  function onSave(uri,filename){
+    var link=document.createElement("a");
+    document.body.appendChild(link);
+    link.href=uri;
+    link.download=filename;
+    link.click();
+    document.body.removeChild(link);
+  }
+
   return (
     <Container>
-      <AppDiv className={themaImg}>
-        <header style={{ display: "flex", justifyContent: "center", margin: "15px 0" }}>
+      <AppDiv id="capture" className={themaImg}>
+        <header style={{ display: "flex", justifyContent: "center", margin: "8px 0" }}>
           <span style={{ fontWeight: "900", marginRight: "300px" }}><Link to="/" style={{ textDecoration: 'none', color: "black" }}>🎬영화일기</Link></span>
-          <Button>이미지 저장</Button>
+          <Button onClick={onCapture}>이미지 저장</Button>
           <Button onClick={removeData}>삭제</Button>
         </header>
         <section style={{ display: "flex", justifyContent: "center" }}>
           <img style={{ width: "200px", height: "280px" }} src={mydata.img} alt="" />
-          {mydata.thema !== "home" && <MovieTheater myseat={mydata.seat} thema={mydata.thema} />}
+          {mydata.thema !== "home" && <MovieTheater event={false} myseat={mydata.seat} thema={mydata.thema} />}
         </section>
         <Info>
-          <span style={{ fontSize: "1.6rem", marginRight: "50px" }}>{mydata.date}</span>
+          <span style={{ fontSize: "1.6rem", marginRight: "60px" }}>{mydata.date}</span>
           <MySpan className={mydata.thema}>{mydata.location}</MySpan>
           {mydata.thema !== "home" && <MySpan className={mydata.thema}>{mydata.room}</MySpan>}
           {mydata.thema !== "home" && <MySpan className={mydata.thema}>{mydata.number}</MySpan>}
         </Info>
-        <Info style={{ width: "600px", height: "100px", borderRadius: "10px", border: "2px solid lightgrey" }}>
+        <Info style={{ width: "600px", height: "90px", borderRadius: "10px", border: "2px solid lightgrey" }}>
           {mydata.comment}
         </Info>
       </AppDiv>

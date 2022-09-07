@@ -22,25 +22,21 @@
 }
 
 .cgvimg{
-    background-size: cover;
-    box-shadow: 0 0 0 12px #E41A12 inset;
+    /*box-shadow: 0 0 0 12px #E41A12 inset;*/
+    border:10px solid #e41a12;
 }
 .lotteimg{
-    box-shadow: 0 0 0 12px #c53535 inset;
-    background-size: cover;
+    border:10px solid #c53535;
 }
 .megaimg{
-    box-shadow: 0 0 0 12px #3d2a76 inset;
-    background-size: cover;
+    border:10px solid #3d2a76;
 }
 .indeimg{
-    box-shadow: 0 0 0 12px #f4d322 inset;
-    background-size: cover;
+    border:10px solid #f4d322;
 }
 .homeimg{
     /*background-image:url('db/home.png');*/
-    box-shadow: 0 0 0 12px #199831 inset;
-    background-size: cover;
+    border:10px solid #199831;
 }
 
 

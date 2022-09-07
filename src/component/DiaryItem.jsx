@@ -8,7 +8,7 @@ const Item=styled.div`
     width:270px;
     height:180px;
     border-radius:15px;
-    margin:23px;
+    margin:20px;
     color:white;
     font-weight:900;
 `

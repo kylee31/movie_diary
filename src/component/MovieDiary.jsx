@@ -24,8 +24,8 @@ const Container = styled.div`
 `;
 
 const AppDiv = styled.div`
-  width:650px;
-  height:500px;
+  width:630px;
+  height:480px;
   background-color:rgb(250,250,250);
   border-radius:50px;
   padding:20px;
@@ -64,10 +64,10 @@ function MovieDiary() {
     const [day, setDay] = useState("0000-00-00");
     const [thema, setThema] = useState("cgv");
     const [img, setImg] = useState(img1);
-    const [comment, setComment] = useState("");
-    const [location,setLocation]=useState("");
-    const [room,setRoom]=useState("");
-    const [number,setNumber]=useState("");
+    const [comment, setComment] = useState("💬");
+    const [location,setLocation]=useState("💬");
+    const [room,setRoom]=useState("💬");
+    const [number,setNumber]=useState("💬");
 
     const [seat,setSeat]=useState("");
 
@@ -171,7 +171,7 @@ function MovieDiary() {
                 </header><br />
                 <section style={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
                     <img style={{ width: "200px", height: "280px" }} src={img} alt="" />
-                    {thema !== "home" ? <MovieTheater myseat={""} onSeat={saveSeat} thema={thema} /> : <></>}
+                    {thema !== "home" ? <MovieTheater event={true} myseat={""} onSeat={saveSeat} thema={thema} /> : <></>}
                 </section>
                 <section style={{ display: "flex", justifyContent: "center" }}>
                     <label>

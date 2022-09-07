@@ -29,17 +29,15 @@ const Seat = styled.td`
     margin:2px;
 `
 
-function MovieTheater({thema,onSeat,myseat}) {
+function MovieTheater({thema,onSeat,myseat,event}) {
 
     //thema로 받아와서 css 변경하기
 
     const themaseat=thema.concat("seat");
     const [selectedSeat, setSelectedSeat] = useState(myseat);
 
-    console.log();
-
     return (
-        <Box>
+        <Box style={{pointerEvents:event===false?"none":"auto"}}>
             <br/>
             <Screen className={thema}>screen</Screen><br />
             <table style={{ margin: "auto" }}>
