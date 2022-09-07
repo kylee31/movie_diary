@@ -19,7 +19,7 @@ function DiaryItem({thema,img,date,id}){
     const navigate=useNavigate();
 
     function onClick(){
-        navigate(`/show_diary/${id+1}`,{state:{id:id}});
+        navigate(`/show_movie_diary/${id+1}`,{state:{id:id}});
     }
 
     return(

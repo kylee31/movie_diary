@@ -4,21 +4,27 @@
 }
 .cgv, .cgvseat{
     background-color:#E41A12;
+    font-weight: 900;
 }
 .lotte, .lotteseat{
     background-color:#c53535;
+    font-weight: 900;
 }
 .mega, .megaseat{
     background-color:#3d2a76;
+    font-weight: 900;
+    color:white;
 }
 .inde, .indeseat{
     background-color:#f4d322;
+    font-weight: 900;
 }
 .cgvseat:hover,.lotteseat:hover,.megaseat:hover,.indeseat:hover{
     background-color:rgb(105, 105, 105);
 }
 .home{
     background-color: green;
+    color:white;
 }
 
 .cgvimg{

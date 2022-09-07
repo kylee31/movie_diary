@@ -104,13 +104,13 @@ function ShowDiary() {
     //navigate로 변경..? 근데 왜 안돼
     //console.log(id);
     setId(id - 1);
-    navigate(`/show_diary/${id}`);
+    navigate(`/show_movie_diary/${id}`);
   }
 
   function onNext() {
     //console.log(id);
     setId(id + 1);
-    navigate(`/show_diary/${id + 2}`);
+    navigate(`/show_movie_diary/${id + 2}`);
   }
 
   return (
@@ -122,13 +122,13 @@ function ShowDiary() {
           <Button onClick={removeData}>삭제</Button>
         </header>
         <div style={{ display: "flex", justifyContent: "center",alignItems:"center",fontWeight:"900"}}>
-          <section style={{marginLeft:mydata.thema=="home"?"50px":"0"}}>
+          <section style={{marginLeft:mydata.thema==="home"?"50px":"0"}}>
             <img style={{ width: "200px", height: "280px" }} src={mydata.img} alt="" />
             <div style={{ fontSize: "1.6rem", marginLeft: "25px"}}>{mydata.date}</div>
           </section>
           <section>
             {mydata.thema !== "home" && <MovieTheater event={false} myseat={mydata.seat} thema={mydata.thema} />}
-            <div style={{ display: "flex", justifyContent: "center",marginLeft:"50px",marginTop:"10px"}}>
+            <div style={{ display: "flex", justifyContent: "center",marginLeft:"50px",marginTop:"5px"}}>
               <MySpan className={mydata.thema} 
               style={{position:mydata.thema==="home"?"absolute":"",marginTop:mydata.thema==="home"?"120px":"",marginLeft:mydata.thema==="home"?"200px":""}}>{mydata.location}</MySpan>
               {mydata.thema !== "home" && <MySpan className={mydata.thema}>{mydata.room}</MySpan>}
@@ -136,7 +136,7 @@ function ShowDiary() {
             </div>
           </section>
         </div>
-        <Info style={{ width: "600px", height: "90px", borderRadius: "10px", border: "2px solid lightgrey" }}>
+        <Info style={{ width: "580px", height: "75px", borderRadius: "10px", border: "2px solid lightgrey",padding:"10px"}}>
           {mydata.comment}
         </Info>
       </AppDiv>

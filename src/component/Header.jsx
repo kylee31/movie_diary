@@ -18,7 +18,7 @@ function Header() {
     const navigate = useNavigate();
 
     function onClick() {
-        navigate(`/add_movie_diary/`);
+        navigate(`/write_movie_diary/`);
     }
 
     return (

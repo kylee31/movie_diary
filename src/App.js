@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainPage from './component/MainPage';
-import MovieDiary from './component/MovieDiary';
+import WriteDiary from './component/WriteDiary';
 import ShowDiary from './component/ShowDiary';
 import styled from 'styled-components';
 import { useState } from 'react';
@@ -40,8 +40,8 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route index path="/" element={<MainPage/>} />
-            <Route path="/add_movie_diary" element={<MovieDiary />} />
-            <Route path="/show_diary/:id" element={<ShowDiary />} />
+            <Route path="/write_movie_diary" element={<WriteDiary />} />
+            <Route path="/show_movie_diary/:id" element={<ShowDiary />} />
           </Routes>
         </BrowserRouter>
       </Container>
