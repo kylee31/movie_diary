@@ -128,7 +128,7 @@ function MovieDiary() {
             if (window.confirm("저장하시겠습니까🙂?")) {
                 (diary == null) ? setDiary([mydiary]) : setDiary([...diary, mydiary]);
                 setTimeout(() => {
-                    navigate(`/`);
+                    navigate(`/movie_diary`);
                 }, 200);
             }
         }
@@ -142,7 +142,7 @@ function MovieDiary() {
         <Container>
             <AppDiv className={themaImg}>
                 <header style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
-                    <span style={{ fontWeight: "900", marginRight: "130px" }}><Link to="/" style={{ textDecoration: 'none', color: "black" }}>🎬영화일기</Link></span>
+                    <span style={{ fontWeight: "900", marginRight: "130px" }}><Link to="/movie_diary" style={{ textDecoration: 'none', color: "black" }}>🎬영화일기</Link></span>
                     <label style={{ fontWeight: "900", fontSize: "1.1rem",marginRight:"10px"}}>{day} <input type="date" onChange={saveDate} /></label>
                     <select onChange={selectThema}>
                         <option value="cgv">CGV</option>

@@ -32,7 +32,7 @@ const MySpan = styled.span`
   display:flex;
   justify-content:center;
   align-items:center;
-  width:100px;
+  width:110px;
   height:30px;
   text-align:center;
   border-radius:10px;
@@ -78,7 +78,7 @@ function ShowDiary() {
         return index !== id
       })
       localStorage.setItem("diary", JSON.stringify(newdata));
-      navigate("/");
+      navigate("/movie_diary");
     }
   }
 
@@ -117,20 +117,20 @@ function ShowDiary() {
     <Container>
       <AppDiv id="capture" className={mydata.thema.concat("img")}>
         <header style={{ display: "flex", justifyContent: "center", margin: "8px 0" }}>
-          <span style={{ fontWeight: "900", marginRight: "300px" }}><Link to="/" style={{ textDecoration: 'none', color: "black" }}>🎬영화일기</Link></span>
+          <span style={{ fontWeight: "900", marginRight: "300px" }}><Link to="/movie_diary" style={{ textDecoration: 'none', color: "black" }}>🎬영화일기</Link></span>
           <Button onClick={onCapture}>이미지 저장</Button>
           <Button onClick={removeData}>삭제</Button>
         </header>
-        <div style={{ display: "flex", justifyContent: "center",alignItems:"center",fontWeight:"900"}}>
+        <div style={{ display: "flex", justifyContent: "center",alignItems:"center",fontWeight:"900",marginLeft:"12px"}}>
           <section style={{marginLeft:mydata.thema==="home"?"50px":"0"}}>
             <img style={{ width: "200px", height: "280px" }} src={mydata.img} alt="" />
-            <div style={{ fontSize: "1.6rem", marginLeft: "25px"}}>{mydata.date}</div>
+            <div style={{ fontSize: "1.6rem", marginLeft: "30px"}}>{mydata.date}</div>
           </section>
           <section>
             {mydata.thema !== "home" && <MovieTheater event={false} myseat={mydata.seat} thema={mydata.thema} />}
-            <div style={{ display: "flex", justifyContent: "center",marginLeft:"50px",marginTop:"5px"}}>
+            <div style={{ display: "flex", justifyContent: "center",marginLeft:"38px",marginTop:"5px"}}>
               <MySpan className={mydata.thema} 
-              style={{position:mydata.thema==="home"?"absolute":"",marginTop:mydata.thema==="home"?"120px":"",marginLeft:mydata.thema==="home"?"200px":""}}>{mydata.location}</MySpan>
+              style={{position:mydata.thema==="home"?"absolute":"",marginTop:mydata.thema==="home"?"120px":"",marginLeft:mydata.thema==="home"?"190px":""}}>{mydata.location}</MySpan>
               {mydata.thema !== "home" && <MySpan className={mydata.thema}>{mydata.room}</MySpan>}
               {mydata.thema !== "home" && <MySpan className={mydata.thema}>{mydata.number}</MySpan>}
             </div>
