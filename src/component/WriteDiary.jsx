@@ -60,6 +60,14 @@ const Button = styled.button`
     cursor:pointer;
 `;
 
+const TextNum=styled.div`
+    color:grey;
+    font-size:5px;
+    font-weight:900;
+    position:absolute;
+    margin-left:575px;
+`;
+
 function MovieDiary() {
 
     const navigate = useNavigate();
@@ -128,7 +136,7 @@ function MovieDiary() {
             if (window.confirm("저장하시겠습니까🙂?")) {
                 (diary == null) ? setDiary([mydiary]) : setDiary([...diary, mydiary]);
                 setTimeout(() => {
-                    navigate(`/movie_diary`);
+                    navigate(`/movie_diary/`);
                 }, 200);
             }
         }
@@ -141,8 +149,8 @@ function MovieDiary() {
     return (
         <Container>
             <AppDiv className={themaImg}>
-                <header style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
-                    <span style={{ fontWeight: "900", marginRight: "130px" }}><Link to="/movie_diary" style={{ textDecoration: 'none', color: "black" }}>🎬영화일기</Link></span>
+                <header style={{ display: "flex", justifyContent: "center" }}>
+                    <span style={{ fontWeight: "900", marginRight: "110px" }}><Link to="/movie_diary/" style={{ textDecoration: 'none', color: "black" }}>🎬영화일기</Link></span>
                     <label style={{ fontWeight: "900", fontSize: "1.1rem",marginRight:"10px"}}>{day} <input type="date" onChange={saveDate} /></label>
                     <select onChange={selectThema}>
                         <option value="cgv">CGV</option>
@@ -174,7 +182,8 @@ function MovieDiary() {
                         </div>
                     </section>
                 </div>
-                <TextArea onChange={saveComment} />
+                <TextArea maxLength="140" onChange={saveComment}/>
+                <TextNum>{comment==="💬"?0:comment.length}/140</TextNum>
             </AppDiv>
         </Container>
     );

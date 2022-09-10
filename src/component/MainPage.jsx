@@ -24,8 +24,6 @@ const Box = styled.div`
   height:420px;
   overflow:auto;
   margin-left:15px;
-  scrollbar-width:thin;
-  scrollbar-color:black black;
 `;
 
 function MainPage() {

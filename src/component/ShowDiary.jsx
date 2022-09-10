@@ -20,12 +20,17 @@ const AppDiv = styled.div`
   overflow:auto;
 `;
 
-const Info = styled.p`
+const Info = styled.div`
 display:flex;
 justify-content:center;
 align-items:center;
 font-weight:900;
 margin:5px auto;
+width: 580px;
+height: 75px;
+border-radius: 10px;
+border: 2px solid lightgrey;
+padding:10px;
 `;
 
 const MySpan = styled.span`
@@ -78,7 +83,7 @@ function ShowDiary() {
         return index !== id
       })
       localStorage.setItem("diary", JSON.stringify(newdata));
-      navigate("/movie_diary");
+      navigate("/movie_diary/");
     }
   }
 
@@ -117,7 +122,7 @@ function ShowDiary() {
     <Container>
       <AppDiv id="capture" className={mydata.thema.concat("img")}>
         <header style={{ display: "flex", justifyContent: "center", margin: "8px 0" }}>
-          <span style={{ fontWeight: "900", marginRight: "300px" }}><Link to="/movie_diary" style={{ textDecoration: 'none', color: "black" }}>🎬영화일기</Link></span>
+          <span style={{ fontWeight: "900", marginRight: "300px" }}><Link to="/movie_diary/" style={{ textDecoration: 'none', color: "black" }}>🎬영화일기</Link></span>
           <Button onClick={onCapture}>이미지 저장</Button>
           <Button onClick={removeData}>삭제</Button>
         </header>
@@ -136,7 +141,7 @@ function ShowDiary() {
             </div>
           </section>
         </div>
-        <Info style={{ width: "580px", height: "75px", borderRadius: "10px", border: "2px solid lightgrey",padding:"10px"}}>
+        <Info>
           {mydata.comment}
         </Info>
       </AppDiv>
