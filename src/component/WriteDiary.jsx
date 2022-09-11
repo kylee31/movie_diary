@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
 import styled from "styled-components";
@@ -61,12 +61,18 @@ const Button = styled.button`
 `;
 
 const TextNum=styled.div`
-    color:grey;
     font-size:5px;
     font-weight:900;
     position:absolute;
     margin-left:575px;
 `;
+
+function reducer(state,action){
+    return {
+        ...state,
+        [action.name]:action.value
+    };
+}
 
 function MovieDiary() {
 
@@ -75,32 +81,29 @@ function MovieDiary() {
     const [day, setDay] = useState("0000-00-00");
     const [thema, setThema] = useState("cgv");
     const [img, setImg] = useState(img1);
-    const [comment, setComment] = useState("💬");
-    const [location, setLocation] = useState("💬");
-    const [room, setRoom] = useState("💬");
-    const [number, setNumber] = useState("💬");
     const [seat, setSeat] = useState("");
 
+    //useReducer
+    const [state, dispatch]=useReducer(reducer,{
+        comment:'💬',
+        location:'💬',
+        room:'💬',
+        number:'💬'
+    });
+
+    const {comment,location,room,number}=state;
+    const onChange=(e)=>{
+        dispatch(e.target);
+    };
+    
     const [diary, setDiary] = useState(JSON.parse(localStorage.getItem("diary")) == null ? [] : JSON.parse(localStorage.getItem("diary")));
 
     const themaImg = thema.concat("img");
 
     function saveSeat(data) { setSeat(data); }
-
-    function saveNumber(e) { setNumber(e.target.value); }
-
-    function saveRoom(e) { setRoom(e.target.value); }
-
-    function saveLocation(e) { setLocation(e.target.value); }
-
     function saveDate(e) { setDay(e.target.value); }
-
     function selectThema(e) { setThema(e.target.value); }
-
-    function removeImg() { setImg(img1); }
-
-    function saveComment(e) { setComment(e.target.value); }
-
+    
     function imgUpload(e) {
         let reader = new FileReader();
 
@@ -113,6 +116,7 @@ function MovieDiary() {
             setImg(previewImgUrl);
         }
     }
+    function removeImg() { setImg(img1); }
 
     const mydiary = {
         date: day,
@@ -136,7 +140,7 @@ function MovieDiary() {
             if (window.confirm("저장하시겠습니까🙂?")) {
                 (diary == null) ? setDiary([mydiary]) : setDiary([...diary, mydiary]);
                 setTimeout(() => {
-                    navigate(`/movie_diary/`);
+                    navigate(`/`);
                 }, 200);
             }
         }
@@ -150,7 +154,7 @@ function MovieDiary() {
         <Container>
             <AppDiv className={themaImg}>
                 <header style={{ display: "flex", justifyContent: "center" }}>
-                    <span style={{ fontWeight: "900", marginRight: "110px" }}><Link to="/movie_diary/" style={{ textDecoration: 'none', color: "black" }}>🎬영화일기</Link></span>
+                    <span style={{ fontWeight: "900", marginRight: "110px" }}><Link to="/" style={{ textDecoration: 'none', color: "black" }}>🎬영화일기</Link></span>
                     <label style={{ fontWeight: "900", fontSize: "1.1rem",marginRight:"10px"}}>{day} <input type="date" onChange={saveDate} /></label>
                     <select onChange={selectThema}>
                         <option value="cgv">CGV</option>
@@ -175,15 +179,15 @@ function MovieDiary() {
                     <section>
                         {thema !== "home" ? <MovieTheater event={true} myseat={""} onSeat={saveSeat} thema={thema} /> : <></>}
                         <div style={{ marginLeft: "47px", marginTop: "10px" }}>
-                            <input type="text" size="10" placeholder="장소" className={thema} onChange={saveLocation} 
+                            <input type="text" name="location" size="10" placeholder="장소" className={thema} onChange={onChange} 
                             style={{position:thema==="home"?"absolute":"static",marginTop:thema==="home"?"127px":"0",marginLeft:thema==="home"?"70px":"0"}}/>
-                            {thema !== "home" && <input type="text" size="10" placeholder="영화관" className={thema} onChange={saveRoom} />}
-                            {thema !== "home" && <input type="text" size="10" placeholder="좌석번호" className={thema} onChange={saveNumber} />}
+                            {thema !== "home" && <input type="text" name="room" size="10" placeholder="영화관" className={thema} onChange={onChange} />}
+                            {thema !== "home" && <input type="text" name="number" size="10" placeholder="좌석번호" className={thema} onChange={onChange} />}
                         </div>
                     </section>
                 </div>
-                <TextArea maxLength="140" onChange={saveComment}/>
-                <TextNum>{comment==="💬"?0:comment.length}/140</TextNum>
+                <TextArea name="comment" maxLength="140" onChange={onChange}/>
+                <TextNum style={{color:comment.length<=140?"grey":"red"}}>{comment==="💬"?0:comment.length}/140</TextNum>
             </AppDiv>
         </Container>
     );

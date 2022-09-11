@@ -34,12 +34,12 @@ function App() {
   return (
     <>
       <Container>
-        <Cover onClick={onClick} style={{ display: (title === false && loc === "/movie_diary/") ? "block" : "none" }}>
+        <Cover onClick={onClick} style={{ display: (title === false && loc === "/") ? "block" : "none" }}>
           <div style={{ textAlign: "center", marginTop: "230px", fontWeight: "900", fontSize: "2rem" }}>🎬영화일기</div>
         </Cover>
         <BrowserRouter>
           <Routes>
-            <Route index path="/movie_diary/" element={<MainPage />} />
+            <Route index path="/" element={<MainPage />} />
             <Route path="/write_movie_diary/" element={<WriteDiary />} />
             <Route path="/show_movie_diary/:id" element={<ShowDiary />} />
           </Routes>

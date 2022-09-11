@@ -83,7 +83,7 @@ function ShowDiary() {
         return index !== id
       })
       localStorage.setItem("diary", JSON.stringify(newdata));
-      navigate("/movie_diary/");
+      navigate("/");
     }
   }
 
@@ -122,7 +122,7 @@ function ShowDiary() {
     <Container>
       <AppDiv id="capture" className={mydata.thema.concat("img")}>
         <header style={{ display: "flex", justifyContent: "center", margin: "8px 0" }}>
-          <span style={{ fontWeight: "900", marginRight: "300px" }}><Link to="/movie_diary/" style={{ textDecoration: 'none', color: "black" }}>🎬영화일기</Link></span>
+          <span style={{ fontWeight: "900", marginRight: "300px" }}><Link to="/" style={{ textDecoration: 'none', color: "black" }}>🎬영화일기</Link></span>
           <Button onClick={onCapture}>이미지 저장</Button>
           <Button onClick={removeData}>삭제</Button>
         </header>
