@@ -10,7 +10,8 @@ const Box = styled.div`
     text-align:center;
     padding:10px;
     border:1px solid grey;
-    margin-left: 50px; 
+    margin-left: 50px;
+    pointer-events:${props=>props.primary?"auto":"none"};
 `;
 
 const Screen = styled.div`
@@ -27,6 +28,8 @@ const Seat = styled.td`
     height:25px;
     border-radius:5px;
     margin:2px;
+    margin-right: ${props=>(props.id===2||props.id===6)?"15px":0};
+    background-color: ${props=>props.seat &&"grey"};
 `;
 
 function MovieTheater({ thema, onSeat, myseat, event }) {
@@ -39,38 +42,27 @@ function MovieTheater({ thema, onSeat, myseat, event }) {
     }, [myseat]);
 
     return (
-        <Box style={{ pointerEvents: event === false ? "none" : "auto" }}><br />
+        <Box primary={event}><br />
             <Screen className={thema}>screen</Screen><br />
             <table style={{ margin: "auto" }}>
                 <tbody>
                     {dummy.data.map((seat, index) => {
-                        return <tr key={index}>{dummy.data[index].seat.map((seat) => {
-                            if (seat.id === 2 || seat.id === 6) {
-                                return <Seat style={{ marginRight: "15px", backgroundColor: selectedSeat === String(index) + String(seat.id) && "grey" }} key={String(index) + String(seat.id)} className={themaseat} onClick={() => {
+                        return <tr key={index}>
+                            {dummy.data[index].seat.map((seat) => {
+                                const thisSeat =String(index)+String(seat.id);
+                                return <Seat key={thisSeat} id={seat.id} seat={thisSeat===selectedSeat} className={themaseat} onClick={() => {
                                     if (selectedSeat === "") {
-                                        setSelectedSeat(String(index) + String(seat.id));
-                                        onSeat(String(index) + String(seat.id));
+                                        setSelectedSeat(thisSeat);
+                                        onSeat(thisSeat);
                                     }
                                     else {
                                         setSelectedSeat("");
                                         onSeat("");
                                     }
-                                }}></Seat>
-                            }
-                            else {
-                                return <Seat style={{ backgroundColor: selectedSeat === String(index) + String(seat.id) && "grey" }} key={String(index) + String(seat.id)} className={themaseat} onClick={() => {
-                                    if (selectedSeat === "") {
-                                        setSelectedSeat(String(index) + String(seat.id));
-                                        onSeat(String(index) + String(seat.id));
-                                    }
-                                    else {
-                                        setSelectedSeat("");
-                                        onSeat("");
-                                    }
-                                }}></Seat>
-                            }
-                        })}</tr>;
-                    })}
+                                }}/>
+                            })}
+                        </tr>
+                     })}
                 </tbody>
             </table>
         </Box>

@@ -21,16 +21,16 @@ const AppDiv = styled.div`
 `;
 
 const Info = styled.div`
-display:flex;
-justify-content:center;
-align-items:center;
-font-weight:900;
-margin:5px auto;
-width: 580px;
-height: 75px;
-border-radius: 10px;
-border: 2px solid lightgrey;
-padding:10px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-weight:900;
+  margin:5px auto;
+  width: 580px;
+  height: 75px;
+  border-radius: 10px;
+  border: 2px solid lightgrey;
+  padding:10px;
 `;
 
 const MySpan = styled.span`
@@ -64,7 +64,6 @@ const Slider = styled.span`
 `;
 
 function ShowDiary() {
-
   //슬라이드 버튼 없이 단독 아이템 클릭이 필요했을때 사용한 코드. useParams로 변경
   //const location = useLocation();
   //const id = location.state.id;
@@ -106,7 +105,6 @@ function ShowDiary() {
   }
 
   function onPrev() {
-    //navigate로 변경..? 근데 왜 안돼
     //console.log(id);
     setId(id - 1);
     navigate(`/show_movie_diary/${id}`);

@@ -21,6 +21,13 @@ const Cover = styled.div`
   padding:20px;
 `;
 
+const Title=styled.div`
+  text-align: center;
+  margin-top: 230px;
+  font-weight: 900;
+  font-size: 2rem;
+`;
+
 function App() {
 
   //커버이미지 만들기
@@ -35,7 +42,7 @@ function App() {
     <>
       <Container>
         <Cover onClick={onClick} style={{ display: (title === false && loc === "/") ? "block" : "none" }}>
-          <div style={{ textAlign: "center", marginTop: "230px", fontWeight: "900", fontSize: "2rem" }}>🎬영화일기</div>
+          <Title>🎬영화일기</Title>
         </Cover>
         <BrowserRouter>
           <Routes>

@@ -14,7 +14,13 @@ const Item=styled.div`
     cursor:pointer;
 `
 
-function DiaryItem({thema,img,date,id}){
+const Img=styled.img`
+    width:100px;
+    height:140px;
+    margin-right:30px;
+`
+
+function DiaryItem({id,thema,img,date}){
 
     const navigate=useNavigate();
 
@@ -24,7 +30,7 @@ function DiaryItem({thema,img,date,id}){
 
     return(
         <Item className={thema} onClick={onClick}>
-            <img style={{width:"100px",height:"140px",marginRight:"30px"}} src={img} alt=""/>
+            <Img src={img} alt=""/>
             {date}
         </Item>
     );

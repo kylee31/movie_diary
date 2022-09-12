@@ -38,7 +38,7 @@ function MainPage() {
           <Header />
           <Box className="box">
             {data.map((item, index) => {
-              return <DiaryItem id={index} key={index} thema={item.thema} img={item.img} date={item.date} />
+              return <DiaryItem key={index} id={index} thema={item.thema} img={item.img} date={item.date} />
             })}
           </Box>
         </AppDiv>

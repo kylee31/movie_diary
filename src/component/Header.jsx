@@ -13,19 +13,28 @@ const Button = styled.button`
     cursor:pointer;
 `
 
+const Head=styled.div`
+    padding:15px;
+`;
+
+const Logo=styled.span`
+    font-size:1.3rem;
+    font-weight:900;
+`;
+
 function Header() {
 
     const navigate = useNavigate();
-
+    
     function onClick() {
         navigate(`/write_movie_diary/`);
     }
 
     return (
-        <div style={{padding:"15px"}}>
-            <span style={{fontSize:"1.3rem",fontWeight:"900"}}>🎬영화일기</span>
+        <Head>
+            <Logo>🎬영화일기</Logo>
             <Button onClick={onClick}>일기 작성</Button>
-        </div>
+        </Head>
     );
 }
 
