@@ -1,7 +1,7 @@
 import { useState, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 import MovieTheater from "./MovieTheater";
 import img1 from "../db/img1.png";
 
@@ -18,6 +18,49 @@ const AppDiv = styled.div`
   background-color:rgb(250,250,250);
   border-radius:50px;
   padding:20px;
+`;
+
+const Header=styled.header`
+    display: flex;
+    justify-content: center;
+    .logo{
+        font-weight:900;
+        margin-right:110px;
+        margin-left:10px;
+        text-decoration: none;
+        color:black;
+    }
+    label{
+        font-weight: 900;
+        font-size: 1.1rem;
+        margin-right:10px;
+    }
+`;
+
+const Div=styled.div`
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    margin-left:5px;
+    img{
+        width: 200px;
+        height:280px;
+    }
+    .imgButton{
+        display:flex;
+        flex-direction:row;
+        margin-top:10px;
+    }
+`;
+
+const Info=styled.div`
+    margin-left:47px;
+    margin-top: 10px;
+    ${props=>props.thema==="home"&&css`
+        position:absolute;
+        margin-top:132px;
+        margin-left:80px;
+    `}
 `;
 
 const TextArea = styled.textarea`
@@ -46,6 +89,10 @@ const MyButton = styled.div`
     justify-content : center;
     align-items : center;
     margin-right:10px;
+    ${props=>props.primary&& css`
+        width: 50px;
+        margin-left:10px;
+    `}
 `;
 
 const TextNum=styled.div`
@@ -133,9 +180,9 @@ function MovieDiary() {
     return (
         <Container>
             <AppDiv className={themaImg}>
-                <header style={{ display: "flex", justifyContent: "center" }}>
-                    <span style={{ fontWeight: "900", marginRight: "110px",marginLeft:"10px" }}><Link to="/" style={{ textDecoration: 'none', color: "black" }}>🎬영화일기</Link></span>
-                    <label style={{ fontWeight: "900", fontSize: "1.1rem",marginRight:"10px"}}>{day} <input type="date" onChange={saveDate} /></label>
+                <Header>
+                    <span><Link to="/" className="logo">🎬영화일기</Link></span>
+                    <label>{day} <input type="date" onChange={saveDate} /></label>
                     <select onChange={selectThema}>
                         <option value="cgv">CGV</option>
                         <option value="lotte">LotteCinema</option>
@@ -143,12 +190,12 @@ function MovieDiary() {
                         <option value="inde">독립영화관</option>
                         <option value="home">HOME</option>
                     </select>
-                    <MyButton onClick={saveDatas} style={{ width: "50px",marginLeft:"10px" }}>저장</MyButton>
-                </header><br />
-                <div style={{ display: "flex", justifyContent: "center", alignItems:"center",marginLeft:"5px"}}>
+                    <MyButton onClick={saveDatas} primary={true}>저장</MyButton>
+                </Header><br />
+                <Div>
                     <section>
-                        <img style={{ width: "200px", height: "280px" }} src={img} alt="" />
-                        <div style={{display:"flex",flexDirection:"row",marginTop:"10px"}}>
+                        <img src={img} alt="" />
+                        <div className="imgButton">
                         <label>
                             <MyButton>포스터 선택</MyButton>
                             <input style={{ display: "none" }} type="file" accept="image/*" onChange={imgUpload} />
@@ -158,14 +205,13 @@ function MovieDiary() {
                     </section>
                     <section>
                         {thema !== "home" ? <MovieTheater event={true} myseat={""} onSeat={saveSeat} thema={thema} /> : <></>}
-                        <div style={{ marginLeft: "47px", marginTop: "10px" }}>
-                            <input autoComplete="off" type="text" name="location" size="10" placeholder="장소" className={thema} onChange={onChange} 
-                            style={{position:thema==="home"?"absolute":"static",marginTop:thema==="home"?"127px":"0",marginLeft:thema==="home"?"70px":"0"}}/>
+                        <Info thema={thema}>
+                            <input autoComplete="off" type="text" name="location" size="10" placeholder="장소" className={thema} onChange={onChange}/>
                             {thema !== "home" && <input autoComplete="off" type="text" name="room" size="10" placeholder="영화관" className={thema} onChange={onChange} />}
                             {thema !== "home" && <input autoComplete="off"  type="text" name="number" size="10" placeholder="좌석번호" className={thema} onChange={onChange} />}
-                        </div>
+                        </Info>
                     </section>
-                </div>
+                </Div>
                 <TextArea name="comment" maxLength="140" onChange={onChange}/>
                 <TextNum length={comment.length}>{comment==="💬"?0:comment.length}/140</TextNum>
             </AppDiv>

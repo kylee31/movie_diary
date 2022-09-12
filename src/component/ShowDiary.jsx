@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled,{css} from "styled-components";
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import MovieTheater from "./MovieTheater";
@@ -18,6 +18,44 @@ const AppDiv = styled.div`
   background-color:rgb(250,250,250);
   padding:20px;
   overflow:auto;
+`;
+
+const Header=styled.header`
+  display: flex;
+  justify-content: center;
+  
+  margin-bottom:25px;
+  .logo{
+    font-weight: 900;
+    margin-right: 485px;
+    text-decoration: none;
+    color: black;
+  }
+`;
+
+const Div=styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight:900;
+  margin-top:${props=>props.thema==="home"?"30px":0};
+  .poster{
+    margin-left:${props=>props.thema==="home"?"38px":0};
+  }
+  img{
+    width: 200px;
+    height: 280px;
+  }
+  .date{
+    font-size:1.6rem;
+    margin-left: 30px;
+  }
+  .information{
+    display: flex;
+    justify-content: center;
+    margin-left:38px;
+    margin-top:5px;
+  }
 `;
 
 const Info = styled.div`
@@ -42,6 +80,13 @@ const MySpan = styled.span`
   text-align:center;
   border-radius:10px;
   margin:3px;
+  ${props =>
+    props.thema==="home"&&
+    css`
+      position:absolute;
+      margin-top:125px;
+      margin-left:200px;
+    `}
 `;
 
 const Button = styled.button`
@@ -61,6 +106,15 @@ const Slider = styled.span`
   position:absolute;
   font-size:1.8rem;
   cursor:pointer;
+  margin-right: ${props=>props.right?"620px":0};
+  margin-left: ${props=>props.left?"620px":0};
+  visibility:${props=>props.show?"hidden":"visible"};
+`;
+
+const SaveButton=styled.div`
+  position:absolute;
+  margin-bottom:450px;
+  margin-left:400px;
 `;
 
 function ShowDiary() {
@@ -88,7 +142,7 @@ function ShowDiary() {
 
   //html2canvas
   function onCapture() {
-    if (window.confirm("이미지를 저장하시겠습니까🙂?")) {
+    if (window.confirm("일기를 저장하시겠습니까🙂?")) {
       html2canvas(document.getElementById("capture")).then(canvas => {
         onSave(canvas.toDataURL("image/png"), `movie-diary${id + 1}.png`);
       });
@@ -119,32 +173,31 @@ function ShowDiary() {
   return (
     <Container>
       <AppDiv id="capture" className={mydata.thema.concat("img")}>
-        <header style={{ display: "flex", justifyContent: "center", margin: "8px 0" }}>
-          <span style={{ fontWeight: "900", marginRight: "300px" }}><Link to="/" style={{ textDecoration: 'none', color: "black" }}>🎬영화일기</Link></span>
-          <Button onClick={onCapture}>이미지 저장</Button>
-          <Button onClick={removeData}>삭제</Button>
-        </header>
-        <div style={{ display: "flex", justifyContent: "center",alignItems:"center",fontWeight:"900",marginLeft:"12px"}}>
-          <section style={{marginLeft:mydata.thema==="home"?"50px":"0"}}>
-            <img style={{ width: "200px", height: "280px" }} src={mydata.img} alt="" />
-            <div style={{ fontSize: "1.6rem", marginLeft: "30px"}}>{mydata.date}</div>
+        <Header>
+          <span><Link to="/" className="logo">🎬영화일기</Link></span>
+        </Header>
+        <Div thema={mydata.thema}>
+          <section className="poster">
+            <img src={mydata.img} alt="" />
+            <div className="date">{mydata.date}</div>
           </section>
           <section>
             {mydata.thema !== "home" && <MovieTheater event={false} myseat={mydata.seat} thema={mydata.thema} />}
-            <div style={{ display: "flex", justifyContent: "center",marginLeft:"38px",marginTop:"5px"}}>
-              <MySpan className={mydata.thema} 
-              style={{position:mydata.thema==="home"?"absolute":"",marginTop:mydata.thema==="home"?"120px":"",marginLeft:mydata.thema==="home"?"190px":""}}>{mydata.location}</MySpan>
+            <div className="information">
+              <MySpan className={mydata.thema} thema={mydata.thema}>{mydata.location}</MySpan>
               {mydata.thema !== "home" && <MySpan className={mydata.thema}>{mydata.room}</MySpan>}
               {mydata.thema !== "home" && <MySpan className={mydata.thema}>{mydata.number}</MySpan>}
             </div>
           </section>
-        </div>
-        <Info>
-          {mydata.comment}
-        </Info>
+        </Div>
+        <Info>{mydata.comment}</Info>
       </AppDiv>
-      <Slider style={{ marginRight: "620px", visibility: id === 0 ? "hidden" : "visible" }} onClick={onPrev}>◀</Slider>
-      <Slider style={{ marginLeft: "620px", visibility: id === data.length - 1 ? "hidden" : "visible" }} onClick={onNext}>▶</Slider>
+      <SaveButton>
+          <Button onClick={onCapture}>이미지 저장</Button>
+          <Button onClick={removeData}>삭제</Button>
+      </SaveButton>
+      <Slider show={id===0} right={true} onClick={onPrev}>◀</Slider>
+      <Slider show={id===data.length-1} left={true} onClick={onNext}>▶</Slider>
     </Container>
   );
 }
