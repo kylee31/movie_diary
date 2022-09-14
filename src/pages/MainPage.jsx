@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import DiaryItem from "./DiaryItem";
-import Header from "./Header";
+import DiaryItem from "../component/DiaryItem";
+import Header from "../component/Header";
 
 const Container = styled.div`
   height:100vh;
@@ -37,7 +37,7 @@ function MainPage() {
         <AppDiv>
           <Header />
           <Box className="box">
-            {data.map((item, index) => {
+            {data.map((item,index) => {
               return <DiaryItem key={index} id={index} thema={item.thema} img={item.img} date={item.date} />
             })}
           </Box>

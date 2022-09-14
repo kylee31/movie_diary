@@ -1,7 +1,7 @@
 import styled,{css} from "styled-components";
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import MovieTheater from "./MovieTheater";
+import MovieTheater from "../component/MovieTheater";
 import html2canvas from "html2canvas";
 
 const Container = styled.div`
@@ -38,6 +38,7 @@ const Div=styled.div`
   justify-content: center;
   align-items: center;
   font-weight:900;
+  margin-left:14px;
   margin-top:${props=>props.thema==="home"?"30px":0};
   .poster{
     margin-left:${props=>props.thema==="home"?"38px":0};
@@ -114,7 +115,7 @@ const Slider = styled.span`
 const SaveButton=styled.div`
   position:absolute;
   margin-bottom:450px;
-  margin-left:400px;
+  margin-left:300px;
 `;
 
 function ShowDiary() {
@@ -130,7 +131,7 @@ function ShowDiary() {
   const mydata = data[id];
 
   //localstorage에서 데이터 삭제
-  function removeData() {
+  function onRemove() {
     if (window.confirm("삭제하시겠습니까😮?")) {
       const newdata = data.filter((e, index) => {
         return index !== id
@@ -140,13 +141,8 @@ function ShowDiary() {
     }
   }
 
-  //html2canvas
-  function onCapture() {
-    if (window.confirm("일기를 저장하시겠습니까🙂?")) {
-      html2canvas(document.getElementById("capture")).then(canvas => {
-        onSave(canvas.toDataURL("image/png"), `movie-diary${id + 1}.png`);
-      });
-    }
+  function onUpdate(){
+    navigate(`/update_movie_diary/${id+1}`);
   }
 
   function onSave(uri, filename) {
@@ -156,6 +152,15 @@ function ShowDiary() {
     link.download = filename;
     link.click();
     document.body.removeChild(link);
+  }
+  
+  //html2canvas
+  function onCapture() {
+    if (window.confirm("일기를 저장하시겠습니까🙂?")) {
+      html2canvas(document.getElementById("capture")).then(canvas => {
+        onSave(canvas.toDataURL("image/png"), `movie-diary${id + 1}.png`);
+      });
+    }
   }
 
   function onPrev() {
@@ -172,7 +177,7 @@ function ShowDiary() {
 
   return (
     <Container>
-      <AppDiv id="capture" className={mydata.thema.concat("img")}>
+      <AppDiv id="capture" className={mydata.thema.concat("Background")}>
         <Header>
           <span><Link to="/" className="logo">🎬영화일기</Link></span>
         </Header>
@@ -194,7 +199,8 @@ function ShowDiary() {
       </AppDiv>
       <SaveButton>
           <Button onClick={onCapture}>이미지 저장</Button>
-          <Button onClick={removeData}>삭제</Button>
+          <Button onClick={onUpdate}>수정</Button>
+          <Button onClick={onRemove}>삭제</Button>
       </SaveButton>
       <Slider show={id===0} right={true} onClick={onPrev}>◀</Slider>
       <Slider show={id===data.length-1} left={true} onClick={onNext}>▶</Slider>

@@ -27,21 +27,20 @@
     color:white;
 }
 
-.cgvimg{
+.cgvBackground{
     /*box-shadow: 0 0 0 12px #E41A12 inset;*/
     border:10px solid #e41a12;
 }
-.lotteimg{
+.lotteBackground{
     border:10px solid #c53535;
 }
-.megaimg{
+.megaBackground{
     border:10px solid #3d2a76;
 }
-.indeimg{
+.indeBackground{
     border:10px solid #f4d322;
 }
-.homeimg{
-    /*background-image:url('db/home.png');*/
+.homeBackground{
     border:10px solid #199831;
 }
 

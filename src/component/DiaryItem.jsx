@@ -25,7 +25,7 @@ function DiaryItem({id,thema,img,date}){
     const navigate=useNavigate();
 
     function onClick(){
-        navigate(`/show_movie_diary/${id+1}`,{state:{id:id}});
+        navigate(`/show_movie_diary/${id+1}`);
     }
 
     return(

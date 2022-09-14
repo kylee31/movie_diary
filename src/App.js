@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MainPage from './component/MainPage';
-import WriteDiary from './component/WriteDiary';
-import ShowDiary from './component/ShowDiary';
+import MainPage from './pages/MainPage';
+import WriteDiary from './pages/WriteDiary';
+import ShowDiary from './pages/ShowDiary';
+import EditDiary from './pages/EditDiary';
 import styled from 'styled-components';
 import { useState } from 'react';
 
@@ -13,19 +14,19 @@ const Container = styled.div`
 `;
 
 const Cover = styled.div`
-  position:absolute;
-  width:650px;
-  height:500px;
-  background-color:lightgrey;
-  border-radius:50px;
-  padding:20px;
+position:absolute;
+width:650px;
+height:500px;
+background-color:lightgrey;
+border-radius:50px;
+padding:20px;
 `;
 
-const Title=styled.div`
-  text-align: center;
-  margin-top: 230px;
-  font-weight: 900;
-  font-size: 2rem;
+const Title = styled.div`
+text-align: center;
+margin-top: 230px;
+font-weight: 900;
+font-size: 2rem;
 `;
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
             <Route index path="/" element={<MainPage />} />
             <Route path="/write_movie_diary/" element={<WriteDiary />} />
             <Route path="/show_movie_diary/:id" element={<ShowDiary />} />
+            <Route path="/update_movie_diary/:id" element={<EditDiary />} />
           </Routes>
         </BrowserRouter>
       </Container>
