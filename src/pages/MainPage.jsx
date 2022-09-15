@@ -2,13 +2,6 @@ import styled from "styled-components";
 import DiaryItem from "../component/DiaryItem";
 import Header from "../component/Header";
 
-const Container = styled.div`
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-`;
-
 const AppDiv = styled.div`
   width:650px;
   height:500px;
@@ -33,7 +26,6 @@ function MainPage() {
 
   return (
     <>
-      <Container>
         <AppDiv>
           <Header />
           <Box className="box">
@@ -42,7 +34,6 @@ function MainPage() {
             })}
           </Box>
         </AppDiv>
-      </Container>
     </>
   );
 }

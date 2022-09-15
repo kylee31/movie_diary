@@ -4,13 +4,6 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import MovieTheater from "../component/MovieTheater";
 import html2canvas from "html2canvas";
 
-const Container = styled.div`
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-`;
-
 const AppDiv = styled.div`
   width:630px;
   height:480px;
@@ -176,7 +169,7 @@ function ShowDiary() {
   }
 
   return (
-    <Container>
+    <>
       <AppDiv id="capture" className={mydata.thema.concat("Background")}>
         <Header>
           <span><Link to="/" className="logo">🎬영화일기</Link></span>
@@ -204,7 +197,7 @@ function ShowDiary() {
       </SaveButton>
       <Slider show={id===0} right={true} onClick={onPrev}>◀</Slider>
       <Slider show={id===data.length-1} left={true} onClick={onNext}>▶</Slider>
-    </Container>
+    </>
   );
 }
 
