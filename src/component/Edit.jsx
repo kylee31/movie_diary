@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Link } from 'react-router-dom';
 import styled, { css } from "styled-components";
+import { Link } from 'react-router-dom';
 import MovieTheater from "../component/MovieTheater";
-import img1 from "../db/img1.png";
+import emptyImg from "../db/emptyImg.png";
+import { useLayoutEffect } from "react";
 
 const AppDiv = styled.div`
   width:630px;
@@ -23,33 +24,36 @@ const Header = styled.header`
         text-decoration: none;
         color:black;
     }
-    label{
-        font-weight: 900;
-        font-size: 1.1rem;
-        margin-right:10px;
-    }
 `;
+
+const Label = styled.label`
+    font-weight: 900;
+    font-size: 1.1rem;
+    margin-right:10px;
+`
 
 const Div = styled.div`
     display: flex;
     justify-content: center;
     align-items:center;
     margin-left:5px;
-    img{
-        width: 200px;
-        height:280px;
-    }
-    .imgButton{
-        display:flex;
-        flex-direction:row;
-        margin-top:10px;
-    }
+`;
+
+const Img = styled.img`
+    width:200px;
+    height:280px;
+`;
+
+const ImgButton = styled.div`
+    display:flex;
+    flex-direction:row;
+    margin-top:10px;
 `;
 
 const Info = styled.div`
     margin-left:47px;
     margin-top: 10px;
-    ${props => props.thema === "home" && css`
+    ${props => props.$thema === "home" && css`
         position:absolute;
         margin-top:132px;
         margin-left:80px;
@@ -82,29 +86,41 @@ const MyButton = styled.div`
     justify-content : center;
     align-items : center;
     margin-right:10px;
-    ${props => props.primary && css`
+    ${props => props.$primary && css`
         width: 50px;
         margin-left:10px;
     `}
 `;
 
 const TextNum = styled.div`
-    font-size:5px;
+    font-size:0.3rem;
     font-weight:900;
     position:absolute;
     margin-left:575px;
-    color:${props => props.length <= 140 ? "grey" : "red"};
+    color:${props => props.$length <= 140 ? "grey" : "red"};
 `;
-
 
 function Edit({ isEdit, id }) {
 
     const navigate = useNavigate();
+    const nowDate = () => {
+        const year = new Date().getFullYear().toString();
+        let month = (new Date().getMonth() + 1);
+        let day = new Date().getDate();
+
+        if (month >= 1 && month <= 9) {
+            month = "0" + (new Date().getMonth() + 1).toString();
+        }
+        else if (day >= 1 && day <= 9) {
+            day = "0" + new Date().getDate();
+        }
+        return `${year}-${month}-${day}`;
+    };
 
     const [diary, setDiary] = useState(JSON.parse(localStorage.getItem("diary")) == null ? [] : JSON.parse(localStorage.getItem("diary")));
-    const [date, setDay] = useState("0000-00-00");
+    const [date, setDay] = useState(nowDate);
     const [thema, setThema] = useState("cgv");
-    const [img, setImg] = useState(img1);
+    const [img, setImg] = useState(emptyImg);
     const [seat, setSeat] = useState("");
     const [location, setLocation] = useState("");
     const [room, setRoom] = useState("");
@@ -124,90 +140,86 @@ function Edit({ isEdit, id }) {
         comment: comment,
     };
 
-    function saveSeat(data) { setSeat(data); }
-    function saveDate(e) { setDay(e.target.value); }
-    function selectThema(e) { setThema(e.target.value); }
-    function saveLocation(e) { setLocation(e.target.value); }
-    function saveRoom(e) { setRoom(e.target.value); }
-    function saveNumber(e) { setNumber(e.target.value); }
-    function saveComment(e) { setComment(e.target.value); }
+    function onSaveSeat(data) { setSeat(data); }
+    function onSaveDate(e) { setDay(e.target.value); }
+    function onSelectThema(e) { setThema(e.target.value); }
+    function onSaveLocation(e) { setLocation(e.target.value); }
+    function onSaveRoom(e) { setRoom(e.target.value); }
+    function onSaveNumber(e) { setNumber(e.target.value); }
+    function onSaveComment(e) { setComment(e.target.value); }
 
     function onImgUpload(e) {
         let reader = new FileReader();
         if (e.target.files[0]) {
             reader.readAsDataURL(e.target.files[0]);
-        }
+            reader.onload = () => {
+                const previewImgUrl = reader.result;
 
-        reader.onload = () => {
-            const previewImgUrl = reader.result;
+                const fackImg = new Image();
+                fackImg.src = previewImgUrl;
+                //로드되면 실행
+                fackImg.onload = () => {
+                    const canvas = document.createElement("canvas");
+                    let ctx = canvas.getContext("2d");
+                    ctx.drawImage(fackImg, 0, 0);
 
-            const img = document.createElement("img");
-            img.src = previewImgUrl;
+                    const MAX_WIDTH = 300;
+                    const MAX_HEIGHT = 420;
+                    let width = fackImg.width;
+                    let height = fackImg.height;
 
-            const canvas = document.createElement("canvas");
-            let ctx = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0);
+                    if (width > 600 && height > 840) {
+                        if (width > height) {
+                            if (width > MAX_WIDTH) {
+                                height *= MAX_WIDTH / width;
+                                width = MAX_WIDTH;
+                            }
+                        } else {
+                            if (height > MAX_HEIGHT) {
+                                width *= MAX_HEIGHT / height;
+                                height = MAX_HEIGHT;
+                            }
+                        }
+                        canvas.width = width;
+                        canvas.height = height;
 
-            const MAX_WIDTH = 300;
-            const MAX_HEIGHT = 360;
-            let width = img.width;
-            let height = img.height;
+                        ctx.drawImage(fackImg, 0, 0, canvas.width, canvas.height);
 
-            if (width > 800 && height > 960) {
-                if (width > height) {
-                    if (width > MAX_WIDTH) {
-                        height *= MAX_WIDTH / width;
-                        width = MAX_WIDTH;
+                        const dataurl = canvas.toDataURL("image/png");
+                        setImg(dataurl);
                     }
-                } else {
-                    if (height > MAX_HEIGHT) {
-                        width *= MAX_HEIGHT / height;
-                        height = MAX_HEIGHT;
+                    else {
+                        console.log("바로 여기로")
+                        setImg(previewImgUrl);
                     }
                 }
-                canvas.width = width;
-                canvas.height = height;
-
-                // canvas에 변경된 크기의 이미지를 다시 그려줍니다. 
-                ctx = canvas.getContext("2d");
-                ctx.drawImage(img, 0, 0, width, height);
-
-                const dataurl = canvas.toDataURL("image/png");
-                //console.log(dataurl); 
-                setImg(dataurl);
             }
-            else {
-                setImg(previewImgUrl);
-            }
+            e.target.value = "";
         }
     }
     function onRemoveImg() {
-        setImg(img1);
+        setImg(emptyImg);
     }
 
     async function onSave() {
-        if (date === "0000-00-00") {
-            alert("날짜를 기입해주세요😅");
-        }
-        else {
-            if (window.confirm(`${isEdit ? "수정" : "저장"}하시겠습니까🙂?`)) {
-                try {
-                    if (!isEdit) { (diary == null) ? await setDiary([mydiary]) : await setDiary([mydiary, ...diary]); }
-                    else if (isEdit) {
-                        await setDiary([mydiary, ...diary.filter((item, index) => index !== id)]);
-                        //console.log(diary);
-                    }
+        if (window.confirm(`${isEdit ? "수정" : "저장"}하시겠습니까🙂?`)) {
+            try {
+                if (!isEdit) {
+                    (diary == null) ? await setDiary([mydiary]) : await setDiary([mydiary, ...diary]);
                     await navigate(`/`);
-                } catch (e) {
-                    console.log(e);
                 }
+                else if (isEdit) {
+                    await setDiary([mydiary, ...diary.filter((item, index) => index !== id)]);
+                    await navigate(`/show_movie_diary/1`);
+                }
+            } catch (e) {
+                console.log(e);
             }
         }
     };
 
-
-
-    useEffect(() => {
+    //새로고침 시 깜빡임 오류 수정(useEffect에서 useLayoutEffect로)
+    useLayoutEffect(() => {
         if (isEdit) {
             async function newDatas() {
                 await setDay(diary[id].date);
@@ -227,39 +239,40 @@ function Edit({ isEdit, id }) {
     return (
         <AppDiv className={themaBackground}>
             <Header>
-                <span><Link to="/" className="logo">🎬영화일기</Link></span>
-                <label>{date} <input type="date" value={date} onChange={saveDate} /></label>
-                <select value={thema} onChange={selectThema}>
+                <Link to="/" className="logo">🎬영화일기</Link>
+                <Label>{date} <input type="date" value={date} onChange={onSaveDate} /></Label>
+                <select value={thema} onChange={onSelectThema}>
                     <option value="cgv">CGV</option>
                     <option value="lotte">LotteCinema</option>
                     <option value="mega">MEGABOX</option>
                     <option value="inde">독립영화관</option>
                     <option value="home">HOME</option>
                 </select>
-                <MyButton onClick={onSave} primary={true}>{isEdit ? "수정" : "저장"}</MyButton>
+                <MyButton onClick={onSave} $primary={true}>{isEdit ? "수정" : "저장"}</MyButton>
             </Header><br />
             <Div>
                 <section>
-                    <img src={img} alt="" />
-                    <div className="imgButton">
+                    <Img src={img} alt="" />
+                    <ImgButton>
                         <label>
-                            <MyButton title="권장 사이즈 800x960 이하">포스터 선택</MyButton>
+                            <MyButton title="권장 사이즈 600x840 이하">포스터 선택</MyButton>
                             <input style={{ display: "none" }} type="file" accept="image/*" onChange={onImgUpload} />
                         </label>
                         <MyButton onClick={onRemoveImg}>포스터 삭제</MyButton>
-                    </div>
+                    </ImgButton>
                 </section>
                 <section>
-                    {thema !== "home" && <MovieTheater event={true} myseat={seat} onSeat={saveSeat} thema={thema} />}
-                    <Info thema={thema}>
-                        <input autoComplete="off" type="text" value={location} name="location" size="10" placeholder="장소" className={thema} onChange={saveLocation} />
-                        {thema !== "home" && <input autoComplete="off" type="text" value={room} name="room" size="10" placeholder="영화관" className={thema} onChange={saveRoom} />}
-                        {thema !== "home" && <input autoComplete="off" type="text" value={number} name="number" size="10" placeholder="좌석번호" className={thema} onChange={saveNumber} />}
+                    {thema !== "home" && <MovieTheater event={true} myseat={seat} onSeat={onSaveSeat} thema={thema} />}
+                    <Info $thema={thema}>
+                        <input autoComplete="off" type="text" value={location} name="location" size="10" placeholder="위치" className={thema} onChange={onSaveLocation} />
+                        {thema !== "home" && <input autoComplete="off" type="text" value={room} name="room" size="10" placeholder="영화관" className={thema} onChange={onSaveRoom} />}
+                        {thema !== "home" && <input autoComplete="off" type="text" value={number} name="number" size="10" placeholder="좌석번호" className={thema} onChange={onSaveNumber} />}
                     </Info>
                 </section>
             </Div>
-            <TextArea name="comment" value={comment} maxLength="140" onChange={saveComment} />
-            <TextNum length={comment.length}>{comment.length}/140</TextNum>
+            {/*value값을 줘서 max-length가 제대로 작동하지 못함. 임시방편으로 작성시에만 undefined로 수정, 수정기능에서는 다시 고려해야함*/}
+            <TextArea name="comment" value={!isEdit ? undefined : comment} maxLength="140" onChange={onSaveComment} />
+            <TextNum $length={comment.length}>{comment.length}/140</TextNum>
         </AppDiv>
     );
 }

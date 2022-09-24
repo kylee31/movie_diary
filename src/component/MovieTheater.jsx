@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import styled from "styled-components";
 import dummy from "../db/data.json";
 
@@ -11,16 +11,20 @@ const Box = styled.div`
     padding:10px;
     border:1px solid grey;
     margin-left: 50px;
-    pointer-events:${props=>props.primary?"auto":"none"};
+    pointer-events:${props => props.$click ? "auto" : "none"};
 `;
 
 const Screen = styled.div`
     width:230px;
     height:12px;
     color:white;
-    font-size:6px;
+    font-size:0.3rem;
     margin:auto;
 `;
+
+const Table = styled.table`
+    margin:auto;
+`
 
 const Seat = styled.td`
     display:inline-block;
@@ -28,8 +32,8 @@ const Seat = styled.td`
     height:25px;
     border-radius:5px;
     margin:2px;
-    margin-right: ${props=>(props.id===2||props.id===6)?"15px":0};
-    background-color: ${props=>props.seat &&"grey"};
+    margin-right: ${props => (props.$id === 2 || props.$id === 6) ? "15px" : 0};
+    background-color: ${props => props.$seat && "grey"};
 `;
 
 function MovieTheater({ thema, onSeat, myseat, event }) {
@@ -37,20 +41,20 @@ function MovieTheater({ thema, onSeat, myseat, event }) {
     const themaseat = thema.concat("seat");
     const [selectedSeat, setSelectedSeat] = useState(myseat);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         setSelectedSeat(myseat);
     }, [myseat]);
 
     return (
-        <Box primary={event}><br />
+        <Box $click={event}><br />
             <Screen className={thema}>screen</Screen><br />
-            <table style={{ margin: "auto" }}>
+            <Table>
                 <tbody>
                     {dummy.data.map((seat, index) => {
                         return <tr key={index}>
                             {dummy.data[index].seat.map((seat) => {
-                                const thisSeat =String(index)+String(seat.id);
-                                return <Seat key={thisSeat} id={seat.id} seat={thisSeat===selectedSeat} className={themaseat} onClick={() => {
+                                const thisSeat = String(index) + String(seat.id);
+                                return <Seat $id={seat.id} $seat={thisSeat === selectedSeat} key={thisSeat} className={themaseat} onClick={() => {
                                     if (selectedSeat === "") {
                                         setSelectedSeat(thisSeat);
                                         onSeat(thisSeat);
@@ -59,12 +63,12 @@ function MovieTheater({ thema, onSeat, myseat, event }) {
                                         setSelectedSeat("");
                                         onSeat("");
                                     }
-                                }}/>
+                                }} />
                             })}
                         </tr>
-                     })}
+                    })}
                 </tbody>
-            </table>
+            </Table>
         </Box>
     );
 }

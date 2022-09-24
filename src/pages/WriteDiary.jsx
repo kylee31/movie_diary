@@ -1,8 +1,8 @@
 import Edit from "../component/Edit";
 
-function WriteDiary(){
-    return(
-        <Edit/>
+function WriteDiary() {
+    return (
+        <Edit />
     );
 }
 

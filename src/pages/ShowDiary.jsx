@@ -1,6 +1,6 @@
-import styled,{css} from "styled-components";
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import styled, { css } from "styled-components";
 import MovieTheater from "../component/MovieTheater";
 import html2canvas from "html2canvas";
 
@@ -13,10 +13,9 @@ const AppDiv = styled.div`
   overflow:auto;
 `;
 
-const Header=styled.header`
+const Header = styled.header`
   display: flex;
   justify-content: center;
-  
   margin-bottom:25px;
   .logo{
     font-weight: 900;
@@ -26,16 +25,17 @@ const Header=styled.header`
   }
 `;
 
-const Div=styled.div`
+const Div = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight:900;
   margin-left:14px;
-  margin-top:${props=>props.thema==="home"?"30px":0};
-  .poster{
-    margin-left:${props=>props.thema==="home"?"38px":0};
-  }
+  margin-top:${props => props.$thema === "home" ? "30px" : 0};
+`;
+
+const Poster = styled.section`
+  margin-left:${props => props.$thema === "home" ? "38px" : 0};
   img{
     width: 200px;
     height: 280px;
@@ -44,12 +44,13 @@ const Div=styled.div`
     font-size:1.6rem;
     margin-left: 30px;
   }
-  .information{
-    display: flex;
-    justify-content: center;
-    margin-left:38px;
-    margin-top:5px;
-  }
+`;
+
+const Information = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-left:38px;
+  margin-top:5px;
 `;
 
 const Info = styled.div`
@@ -75,7 +76,7 @@ const MySpan = styled.span`
   border-radius:10px;
   margin:3px;
   ${props =>
-    props.thema==="home"&&
+    props.$thema === "home" &&
     css`
       position:absolute;
       margin-top:125px;
@@ -84,31 +85,31 @@ const MySpan = styled.span`
 `;
 
 const Button = styled.button`
-    text-align:center;
-    background-color:black;
-    color:white;
-    font-weight:900;
-    width:80px;
-    height:30px;
-    border-radius:10px;
-    border:0;
-    margin-left:10px;
-    cursor:pointer;
+  text-align:center;
+  background-color:black;
+  color:white;
+  font-weight:900;
+  width:80px;
+  height:30px;
+  border-radius:10px;
+  border:0;
+  margin-left:10px;
+  cursor:pointer;
+`;
+
+const SaveButton = styled.div`
+  position:absolute;
+  margin-bottom:450px;
+  margin-left:300px;
 `;
 
 const Slider = styled.span`
   position:absolute;
   font-size:1.8rem;
   cursor:pointer;
-  margin-right: ${props=>props.right?"620px":0};
-  margin-left: ${props=>props.left?"620px":0};
-  visibility:${props=>props.show?"hidden":"visible"};
-`;
-
-const SaveButton=styled.div`
-  position:absolute;
-  margin-bottom:450px;
-  margin-left:300px;
+  margin-right: ${props => props.$right ? "620px" : 0};
+  margin-left: ${props => props.$left ? "620px" : 0};
+  visibility:${props => props.$show ? "hidden" : "visible"};
 `;
 
 function ShowDiary() {
@@ -117,13 +118,15 @@ function ShowDiary() {
   //const id = location.state.id;
 
   const [id, setId] = useState(useParams().id - 1);
-
   const navigate = useNavigate();
 
   const data = JSON.parse(localStorage.getItem("diary")) == null ? [] : JSON.parse(localStorage.getItem("diary"));
   const mydata = data[id];
 
-  //localstorage에서 데이터 삭제
+  function onUpdate() {
+    navigate(`/update_movie_diary/${id + 1}`);
+  }
+
   function onRemove() {
     if (window.confirm("삭제하시겠습니까😮?")) {
       const newdata = data.filter((e, index) => {
@@ -134,10 +137,6 @@ function ShowDiary() {
     }
   }
 
-  function onUpdate(){
-    navigate(`/update_movie_diary/${id+1}`);
-  }
-
   function onSave(uri, filename) {
     var link = document.createElement("a");
     document.body.appendChild(link);
@@ -146,7 +145,6 @@ function ShowDiary() {
     link.click();
     document.body.removeChild(link);
   }
-  
   //html2canvas
   function onCapture() {
     if (window.confirm("일기를 저장하시겠습니까🙂?")) {
@@ -156,14 +154,13 @@ function ShowDiary() {
     }
   }
 
+  //현재 params는 id+1이므로
   function onPrev() {
-    //console.log(id);
     setId(id - 1);
     navigate(`/show_movie_diary/${id}`);
   }
 
   function onNext() {
-    //console.log(id);
     setId(id + 1);
     navigate(`/show_movie_diary/${id + 2}`);
   }
@@ -172,31 +169,31 @@ function ShowDiary() {
     <>
       <AppDiv id="capture" className={mydata.thema.concat("Background")}>
         <Header>
-          <span><Link to="/" className="logo">🎬영화일기</Link></span>
+          <Link to="/" className="logo">🎬영화일기</Link>
         </Header>
-        <Div thema={mydata.thema}>
-          <section className="poster">
+        <Div $thema={mydata.thema}>
+          <Poster $thema={mydata.thema}>
             <img src={mydata.img} alt="" />
             <div className="date">{mydata.date}</div>
-          </section>
+          </Poster>
           <section>
             {mydata.thema !== "home" && <MovieTheater event={false} myseat={mydata.seat} thema={mydata.thema} />}
-            <div className="information">
-              <MySpan className={mydata.thema} thema={mydata.thema}>{mydata.location}</MySpan>
+            <Information>
+              <MySpan className={mydata.thema} $thema={mydata.thema}>{mydata.location}</MySpan>
               {mydata.thema !== "home" && <MySpan className={mydata.thema}>{mydata.room}</MySpan>}
               {mydata.thema !== "home" && <MySpan className={mydata.thema}>{mydata.number}</MySpan>}
-            </div>
+            </Information>
           </section>
         </Div>
         <Info>{mydata.comment}</Info>
       </AppDiv>
       <SaveButton>
-          <Button onClick={onCapture}>이미지 저장</Button>
-          <Button onClick={onUpdate}>수정</Button>
-          <Button onClick={onRemove}>삭제</Button>
+        <Button onClick={onCapture}>이미지 저장</Button>
+        <Button onClick={onUpdate}>수정</Button>
+        <Button onClick={onRemove}>삭제</Button>
       </SaveButton>
-      <Slider show={id===0} right={true} onClick={onPrev}>◀</Slider>
-      <Slider show={id===data.length-1} left={true} onClick={onNext}>▶</Slider>
+      <Slider $show={id === 0} $right={true} onClick={onPrev}>◀</Slider>
+      <Slider $show={id === data.length - 1} $left={true} onClick={onNext}>▶</Slider>
     </>
   );
 }

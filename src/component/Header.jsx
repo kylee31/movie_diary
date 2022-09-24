@@ -1,6 +1,15 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
+const Head = styled.div`
+    padding:15px;
+`;
+
+const Logo = styled.span`
+    font-size:1.3rem;
+    font-weight:900;
+`;
+
 const Button = styled.button`
     float:right;
     width:100px;
@@ -13,19 +22,9 @@ const Button = styled.button`
     cursor:pointer;
 `
 
-const Head=styled.div`
-    padding:15px;
-`;
-
-const Logo=styled.span`
-    font-size:1.3rem;
-    font-weight:900;
-`;
-
 function Header() {
 
     const navigate = useNavigate();
-    
     function onClick() {
         navigate(`/write_movie_diary/`);
     }
