@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/movie_diary/static/css/main.7326b018.css",
-    "main.js": "/movie_diary/static/js/main.a226e494.js",
+    "main.js": "/movie_diary/static/js/main.740e553a.js",
     "index.html": "/movie_diary/index.html",
     "main.7326b018.css.map": "/movie_diary/static/css/main.7326b018.css.map",
-    "main.a226e494.js.map": "/movie_diary/static/js/main.a226e494.js.map"
+    "main.740e553a.js.map": "/movie_diary/static/js/main.740e553a.js.map"
   },
   "entrypoints": [
     "static/css/main.7326b018.css",
-    "static/js/main.a226e494.js"
+    "static/js/main.740e553a.js"
   ]
 }
