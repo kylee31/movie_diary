@@ -9,7 +9,7 @@ const AppCover = styled.div`
   border-radius:50px;
   padding:20px;
   cursor:pointer;
-  display: ${props => (props.$title === true && props.$loc === "/") ? "block" : "none"};
+  display: ${props => (props.$title === true && props.$loc === "") ? "block" : "none"};
 `;
 
 const Title = styled.div`

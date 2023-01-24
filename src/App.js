@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import styled from 'styled-components';
 import Main from './pages/Main';
 import WriteDiary from './pages/WriteDiary';
@@ -16,20 +16,21 @@ const Container = styled.div`
 
 function App() {
 
-  const loc = window.location.pathname;
+  const loc = window.location.hash;
+  console.log(loc);
 
   return (
     <>
       <Container>
         <Cover loc={loc} />
-        <BrowserRouter>
+        <HashRouter>
           <Routes>
             <Route index path="/" element={<Main />} />
             <Route path="/write_movie_diary/" element={<WriteDiary />} />
             <Route path="/show_movie_diary/:id" element={<ShowDiary />} />
             <Route path="/update_movie_diary/:id" element={<EditDiary />} />
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
       </Container>
     </>
   );
