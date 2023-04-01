@@ -111,7 +111,7 @@ function Edit({ isEdit, id }) {
         if (month >= 1 && month <= 9) {
             month = "0" + (new Date().getMonth() + 1).toString();
         }
-        else if (day >= 1 && day <= 9) {
+        if (day >= 1 && day <= 9) {
             day = "0" + new Date().getDate();
         }
         return `${year}-${month}-${day}`;
