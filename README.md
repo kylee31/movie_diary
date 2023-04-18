@@ -1,6 +1,6 @@
 # 🎬 Movie Diary
 
-그림일기 형식의 영화 감상문 웹 서비스 (2022.07~2022.08)
+그림일기 형식의 영화 감상문 웹 서비스 (2022.07-2022.08)
 <br><br>
 
 ## 구현 및 배포기술
@@ -22,12 +22,18 @@
 
 ## 프로젝트 실행 (상세설명)
 
-- Cover 화면 실행
-- Main page
-- 일기 작성 button
-  <br> 5가지 컨셉, 이미지, 좌석선택, 영화관 위치 등 입력 가능, 150자 감상문 작성
-- 작성된 일기 선택 (수정, 삭제, 이미지 저장 button)
-  <br><br>
+- Cover 화면 실행<br>
+  <image src="https://user-images.githubusercontent.com/106156087/232793800-6042f556-23fd-44a0-a404-a92ca87c5277.png" width="600">
+
+- Main page <br>
+  <image src="https://user-images.githubusercontent.com/106156087/232797374-f21eea2d-39d1-49eb-9a74-4de4b44abf3c.png" width="600">
+
+- 일기 작성 button <br>
+  - 5가지 컨셉, 이미지, 좌석선택, 영화관 위치 등 입력 가능, 140자 감상문 작성
+  <image src="https://user-images.githubusercontent.com/106156087/232794169-497b62ed-a6a4-40a7-b185-42f179828786.png" width="600">
+
+- 작성된 일기 선택 (수정, 삭제, 이미지 저장 button) <br>
+  <image src="https://user-images.githubusercontent.com/106156087/232796226-c239d892-5dc9-48f8-b991-0edbc0b2f571.png" width="600">
 
 ## 호스팅 링크
 
