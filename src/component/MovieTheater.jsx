@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from "react";
 import styled from "styled-components";
-import dummy from "../db/data.json";
+import theater from "../db/data.json";
 
 const Box = styled.div`
     background-color:white;
@@ -50,9 +50,9 @@ function MovieTheater({ thema, onSeat, myseat, event }) {
             <Screen className={thema}>screen</Screen><br />
             <Table>
                 <tbody>
-                    {dummy.data.map((seat, index) => {
+                    {theater.data.map((seat, index) => {
                         return <tr key={index}>
-                            {dummy.data[index].seat.map((seat) => {
+                            {theater.data[index].seat.map((seat) => {
                                 const thisSeat = String(index) + String(seat.id);
                                 return <Seat $id={seat.id} $seat={thisSeat === selectedSeat} key={thisSeat} className={themaseat} onClick={() => {
                                     if (selectedSeat === "") {

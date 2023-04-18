@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { Link } from 'react-router-dom';
-import MovieTheater from "../component/MovieTheater";
+import MovieTheater from "./MovieTheater";
 import emptyImg from "../db/emptyImg.png";
 import { useLayoutEffect } from "react";
 
