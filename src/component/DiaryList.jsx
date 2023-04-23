@@ -1,15 +1,6 @@
 import styled from "styled-components";
 import DiaryItem from "./DiaryItem";
 
-const Box = styled.div`
-  display:flex;
-  flex-flow:row wrap;
-  width:650px;
-  height:420px;
-  overflow:auto;
-  margin-left:15px;
-`;
-
 function DiaryList() {
 
     //localstorage아이템 불러오기
@@ -25,3 +16,12 @@ function DiaryList() {
 }
 
 export default DiaryList;
+
+const Box = styled.div`
+  display:flex;
+  flex-flow:row wrap;
+  width:650px;
+  height:420px;
+  overflow:auto;
+  margin-left:15px;
+`;

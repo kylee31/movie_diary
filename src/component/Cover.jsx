@@ -1,24 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-const AppCover = styled.div`
-  position:absolute;
-  width:650px;
-  height:500px;
-  background-color:lightgrey;
-  border-radius:50px;
-  padding:20px;
-  cursor:pointer;
-  display: ${props => (props.$title === true && props.$loc === "") ? "block" : "none"};
-`;
-
-const Title = styled.div`
-  text-align: center;
-  margin-top: 230px;
-  font-weight: 900;
-  font-size: 2rem;
-`;
-
 function Cover({ loc }) {
 
     //커버 이미지 만들기
@@ -49,3 +31,21 @@ function Cover({ loc }) {
 }
 
 export default Cover;
+
+const AppCover = styled.div`
+  position:absolute;
+  width:650px;
+  height:500px;
+  background-color:lightgrey;
+  border-radius:50px;
+  padding:20px;
+  cursor:pointer;
+  display: ${props => (props.$title === true && props.$loc === "") ? "block" : "none"};
+`;
+
+const Title = styled.div`
+  text-align: center;
+  margin-top: 230px;
+  font-weight: 900;
+  font-size: 2rem;
+`;

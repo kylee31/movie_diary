@@ -1,6 +1,26 @@
 import styled from "styled-components";
 import DiaryList from "../component/DiaryList";
-import Header from "../component/Header";
+import { useNavigate } from "react-router-dom";
+
+function Main() {
+
+  const navigate = useNavigate();
+  function onClick() {
+    navigate(`/write_movie_diary/`);
+  }
+
+  return (
+    <AppDiv>
+      <Head>
+        <Logo>🎬영화일기</Logo>
+        <Button onClick={onClick}>일기 작성</Button>
+      </Head>
+      <DiaryList />
+    </AppDiv>
+  );
+}
+
+export default Main;
 
 const AppDiv = styled.div`
   width:650px;
@@ -10,15 +30,23 @@ const AppDiv = styled.div`
   padding:20px;
 `;
 
-function Main() {
-  return (
-    <>
-      <AppDiv>
-        <Header />
-        <DiaryList />
-      </AppDiv>
-    </>
-  );
-}
+const Head = styled.div`
+    padding:15px;
+`;
 
-export default Main;
+const Logo = styled.span`
+    font-size:1.3rem;
+    font-weight:900;
+`;
+
+const Button = styled.button`
+    float:right;
+    width:100px;
+    height:30px;
+    background-color:black;
+    color:white;
+    border:0;
+    border-radius:10px;
+    font-weight:900;
+    cursor:pointer;
+`

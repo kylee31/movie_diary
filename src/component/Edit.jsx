@@ -6,100 +6,6 @@ import MovieTheater from "./MovieTheater";
 import emptyImg from "../db/emptyImg.png";
 import { useLayoutEffect } from "react";
 
-const AppDiv = styled.div`
-  width:630px;
-  height:480px;
-  background-color:rgb(250,250,250);
-  border-radius:50px;
-  padding:20px;
-`;
-
-const Header = styled.header`
-    display: flex;
-    justify-content: center;
-    .logo{
-        font-weight:900;
-        margin-right:110px;
-        margin-left:10px;
-        text-decoration: none;
-        color:black;
-    }
-`;
-
-const Label = styled.label`
-    font-weight: 900;
-    font-size: 1.1rem;
-    margin-right:10px;
-`
-
-const Div = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items:center;
-    margin-left:5px;
-`;
-
-const Img = styled.img`
-    width:200px;
-    height:280px;
-`;
-
-const ImgButton = styled.div`
-    display:flex;
-    flex-direction:row;
-    margin-top:10px;
-`;
-
-const Info = styled.div`
-    margin-left:47px;
-    margin-top: 10px;
-    ${props => props.$thema === "home" && css`
-        position:absolute;
-        margin-top:132px;
-        margin-left:80px;
-    `}
-`;
-
-const TextArea = styled.textarea`
-    display:flex;
-    margin:auto;
-    width: 600px;
-    height: 80px;
-    border: 2px solid lightgrey;
-    resize: none;
-    font-family:Arial;
-    border-radius:10px;
-    margin-top:10px;
-`;
-
-const MyButton = styled.div`
-    text-align:center;
-    background-color:black;
-    color:white;
-    font-weight:900;
-    width:95px;
-    height:30px;
-    border-radius:10px;
-    cursor:pointer;    
-    font-size:0.8rem;
-    display : flex;
-    justify-content : center;
-    align-items : center;
-    margin-right:10px;
-    ${props => props.$primary && css`
-        width: 50px;
-        margin-left:10px;
-    `}
-`;
-
-const TextNum = styled.div`
-    font-size:0.3rem;
-    font-weight:900;
-    position:absolute;
-    margin-left:575px;
-    color:${props => props.$length <= 140 ? "grey" : "red"};
-`;
-
 function Edit({ isEdit, id }) {
 
     const navigate = useNavigate();
@@ -238,7 +144,7 @@ function Edit({ isEdit, id }) {
 
     return (
         <AppDiv className={themaBackground}>
-            <Header>
+            <EditHeader>
                 <Link to="/" className="logo">🎬영화일기</Link>
                 <Label>{date} <input type="date" value={date} onChange={onSaveDate} /></Label>
                 <select value={thema} onChange={onSelectThema}>
@@ -249,7 +155,7 @@ function Edit({ isEdit, id }) {
                     <option value="home">HOME</option>
                 </select>
                 <MyButton onClick={onSave} $primary={true}>{isEdit ? "수정" : "저장"}</MyButton>
-            </Header><br />
+            </EditHeader><br />
             <Div>
                 <section>
                     <Img src={img} alt="" />
@@ -278,3 +184,97 @@ function Edit({ isEdit, id }) {
 }
 
 export default Edit;
+
+const AppDiv = styled.div`
+  width:630px;
+  height:480px;
+  background-color:rgb(250,250,250);
+  border-radius:50px;
+  padding:20px;
+`;
+
+const EditHeader = styled.header`
+    display: flex;
+    justify-content: center;
+    .logo{
+        font-weight:900;
+        margin-right:110px;
+        margin-left:10px;
+        text-decoration: none;
+        color:black;
+    }
+`;
+
+const Label = styled.label`
+    font-weight: 900;
+    font-size: 1.1rem;
+    margin-right:10px;
+`
+
+const Div = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    margin-left:5px;
+`;
+
+const Img = styled.img`
+    width:200px;
+    height:280px;
+`;
+
+const ImgButton = styled.div`
+    display:flex;
+    flex-direction:row;
+    margin-top:10px;
+`;
+
+const Info = styled.div`
+    margin-left:47px;
+    margin-top: 10px;
+    ${props => props.$thema === "home" && css`
+        position:absolute;
+        margin-top:132px;
+        margin-left:80px;
+    `}
+`;
+
+const TextArea = styled.textarea`
+    display:flex;
+    margin:auto;
+    width: 600px;
+    height: 80px;
+    border: 2px solid lightgrey;
+    resize: none;
+    font-family:Arial;
+    border-radius:10px;
+    margin-top:10px;
+`;
+
+const MyButton = styled.div`
+    text-align:center;
+    background-color:black;
+    color:white;
+    font-weight:900;
+    width:95px;
+    height:30px;
+    border-radius:10px;
+    cursor:pointer;    
+    font-size:0.8rem;
+    display : flex;
+    justify-content : center;
+    align-items : center;
+    margin-right:10px;
+    ${props => props.$primary && css`
+        width: 50px;
+        margin-left:10px;
+    `}
+`;
+
+const TextNum = styled.div`
+    font-size:0.3rem;
+    font-weight:900;
+    position:absolute;
+    margin-left:575px;
+    color:${props => props.$length <= 140 ? "grey" : "red"};
+`;

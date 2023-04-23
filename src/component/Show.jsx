@@ -4,6 +4,94 @@ import styled, { css } from "styled-components";
 import MovieTheater from "./MovieTheater";
 import html2canvas from "html2canvas";
 
+function Show() {
+  //슬라이드 버튼 없이 단독 아이템 클릭이 필요했을때 사용한 코드. useParams로 변경
+  //const location = useLocation();
+  //const id = location.state.id;
+
+  const [id, setId] = useState(useParams().id - 1);
+  const navigate = useNavigate();
+
+  const data = JSON.parse(localStorage.getItem("diary")) == null ? [] : JSON.parse(localStorage.getItem("diary"));
+  const mydata = data[id];
+
+  function onUpdate() {
+    navigate(`/update_movie_diary/${id + 1}`);
+  }
+
+  function onRemove() {
+    if (window.confirm("삭제하시겠습니까😮?")) {
+      const newdata = data.filter((e, index) => {
+        return index !== id
+      })
+      localStorage.setItem("diary", JSON.stringify(newdata));
+      navigate("/");
+    }
+  }
+
+  function onSave(uri, filename) {
+    var link = document.createElement("a");
+    document.body.appendChild(link);
+    link.href = uri;
+    link.download = filename;
+    link.click();
+    document.body.removeChild(link);
+  }
+  //html2canvas
+  function onCapture() {
+    if (window.confirm("일기를 저장하시겠습니까🙂?")) {
+      html2canvas(document.getElementById("capture")).then(canvas => {
+        onSave(canvas.toDataURL("image/png"), `movie-diary${id + 1}.png`);
+      });
+    }
+  }
+
+  //현재 params는 id+1이므로
+  function onPrev() {
+    setId(id - 1);
+    navigate(`/show_movie_diary/${id}`);
+  }
+
+  function onNext() {
+    setId(id + 1);
+    navigate(`/show_movie_diary/${id + 2}`);
+  }
+
+  return (
+    <>
+      <AppDiv id="capture" className={mydata.thema.concat("Background")}>
+        <ShowHeader>
+          <Link to="/" className="logo">🎬영화일기</Link>
+        </ShowHeader>
+        <Div $thema={mydata.thema}>
+          <Poster $thema={mydata.thema}>
+            <img src={mydata.img} alt="" />
+            <div className="date">{mydata.date}</div>
+          </Poster>
+          <section>
+            {mydata.thema !== "home" && <MovieTheater event={false} myseat={mydata.seat} thema={mydata.thema} />}
+            <Information>
+              <MySpan className={mydata.thema} $thema={mydata.thema}>{mydata.location}</MySpan>
+              {mydata.thema !== "home" && <MySpan className={mydata.thema}>{mydata.room}</MySpan>}
+              {mydata.thema !== "home" && <MySpan className={mydata.thema}>{mydata.number}</MySpan>}
+            </Information>
+          </section>
+        </Div>
+        <Info>{mydata.comment}</Info>
+      </AppDiv>
+      <SaveButton>
+        <Button onClick={onCapture}>이미지 저장</Button>
+        <Button onClick={onUpdate}>수정</Button>
+        <Button onClick={onRemove}>삭제</Button>
+      </SaveButton>
+      <Slider $show={id === 0} $right={true} onClick={onPrev}>◀</Slider>
+      <Slider $show={id === data.length - 1} $left={true} onClick={onNext}>▶</Slider>
+    </>
+  );
+}
+
+export default Show;
+
 const AppDiv = styled.div`
   width:630px;
   height:480px;
@@ -13,7 +101,7 @@ const AppDiv = styled.div`
   overflow:auto;
 `;
 
-const Header = styled.header`
+const ShowHeader = styled.header`
   display: flex;
   justify-content: center;
   margin-bottom:25px;
@@ -76,8 +164,8 @@ const MySpan = styled.span`
   border-radius:10px;
   margin:3px;
   ${props =>
-        props.$thema === "home" &&
-        css`
+    props.$thema === "home" &&
+    css`
       position:absolute;
       margin-top:125px;
       margin-left:200px;
@@ -111,91 +199,3 @@ const Slider = styled.span`
   margin-left: ${props => props.$left ? "620px" : 0};
   visibility:${props => props.$show ? "hidden" : "visible"};
 `;
-
-function Show() {
-    //슬라이드 버튼 없이 단독 아이템 클릭이 필요했을때 사용한 코드. useParams로 변경
-    //const location = useLocation();
-    //const id = location.state.id;
-
-    const [id, setId] = useState(useParams().id - 1);
-    const navigate = useNavigate();
-
-    const data = JSON.parse(localStorage.getItem("diary")) == null ? [] : JSON.parse(localStorage.getItem("diary"));
-    const mydata = data[id];
-
-    function onUpdate() {
-        navigate(`/update_movie_diary/${id + 1}`);
-    }
-
-    function onRemove() {
-        if (window.confirm("삭제하시겠습니까😮?")) {
-            const newdata = data.filter((e, index) => {
-                return index !== id
-            })
-            localStorage.setItem("diary", JSON.stringify(newdata));
-            navigate("/");
-        }
-    }
-
-    function onSave(uri, filename) {
-        var link = document.createElement("a");
-        document.body.appendChild(link);
-        link.href = uri;
-        link.download = filename;
-        link.click();
-        document.body.removeChild(link);
-    }
-    //html2canvas
-    function onCapture() {
-        if (window.confirm("일기를 저장하시겠습니까🙂?")) {
-            html2canvas(document.getElementById("capture")).then(canvas => {
-                onSave(canvas.toDataURL("image/png"), `movie-diary${id + 1}.png`);
-            });
-        }
-    }
-
-    //현재 params는 id+1이므로
-    function onPrev() {
-        setId(id - 1);
-        navigate(`/show_movie_diary/${id}`);
-    }
-
-    function onNext() {
-        setId(id + 1);
-        navigate(`/show_movie_diary/${id + 2}`);
-    }
-
-    return (
-        <>
-            <AppDiv id="capture" className={mydata.thema.concat("Background")}>
-                <Header>
-                    <Link to="/" className="logo">🎬영화일기</Link>
-                </Header>
-                <Div $thema={mydata.thema}>
-                    <Poster $thema={mydata.thema}>
-                        <img src={mydata.img} alt="" />
-                        <div className="date">{mydata.date}</div>
-                    </Poster>
-                    <section>
-                        {mydata.thema !== "home" && <MovieTheater event={false} myseat={mydata.seat} thema={mydata.thema} />}
-                        <Information>
-                            <MySpan className={mydata.thema} $thema={mydata.thema}>{mydata.location}</MySpan>
-                            {mydata.thema !== "home" && <MySpan className={mydata.thema}>{mydata.room}</MySpan>}
-                            {mydata.thema !== "home" && <MySpan className={mydata.thema}>{mydata.number}</MySpan>}
-                        </Information>
-                    </section>
-                </Div>
-                <Info>{mydata.comment}</Info>
-            </AppDiv>
-            <SaveButton>
-                <Button onClick={onCapture}>이미지 저장</Button>
-                <Button onClick={onUpdate}>수정</Button>
-                <Button onClick={onRemove}>삭제</Button>
-            </SaveButton>
-            <Slider $show={id === 0} $right={true} onClick={onPrev}>◀</Slider>
-            <Slider $show={id === data.length - 1} $left={true} onClick={onNext}>▶</Slider>
-        </>
-    );
-}
-
-export default Show;
