@@ -17,7 +17,6 @@ const Container = styled.div`
 function App() {
 
   const loc = window.location.hash;
-  console.log(loc);
 
   return (
     <>
