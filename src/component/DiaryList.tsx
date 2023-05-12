@@ -1,14 +1,19 @@
 import styled from "styled-components";
 import DiaryItem from "./DiaryItem";
 
-function DiaryList() {
+interface DataInfo{
+    thema:string,
+    img:string,
+    date:string
+}
 
+function DiaryList() {
     //localstorage아이템 불러오기
-    const data = JSON.parse(localStorage.getItem("diary")) == null ? [] : JSON.parse(localStorage.getItem("diary"));
+    const data = JSON.parse(localStorage.getItem("diary")||"{}") == null ? [] : JSON.parse(localStorage.getItem("diary")||"{}");
 
     return (
         <Box className="box">
-            {data.map((item, index) => {
+            {data.map((item:DataInfo, index:number) => {
                 return <DiaryItem key={index} id={index} thema={item.thema} img={item.img} date={item.date} />
             })}
         </Box>

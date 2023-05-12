@@ -6,13 +6,30 @@ import MovieTheater from "./MovieTheater";
 import emptyImg from "../db/emptyImg.png";
 import { useLayoutEffect } from "react";
 
-function Edit({ isEdit, id }) {
+interface isEdit{
+    isEdit?:boolean,
+    id?:number
+}
+
+interface ThemaColor{
+    $thema:string
+}  
+
+interface Buttonprops{
+    $primary?:boolean
+}
+
+interface TextProps{
+    $length:number
+}
+
+function Edit({ isEdit, id }:isEdit) {
 
     const navigate = useNavigate();
     const nowDate = () => {
         const year = new Date().getFullYear().toString();
-        let month = (new Date().getMonth() + 1);
-        let day = new Date().getDate();
+        let month:number|string = (new Date().getMonth() + 1);
+        let day:number|string = new Date().getDate();
 
         if (month >= 1 && month <= 9) {
             month = "0" + (new Date().getMonth() + 1).toString();
@@ -23,7 +40,7 @@ function Edit({ isEdit, id }) {
         return `${year}-${month}-${day}`;
     };
 
-    const [diary, setDiary] = useState(JSON.parse(localStorage.getItem("diary")) == null ? [] : JSON.parse(localStorage.getItem("diary")));
+    const [diary, setDiary] = useState(JSON.parse(localStorage.getItem("diary")||"{}") == null ? [] : JSON.parse(localStorage.getItem("diary")||"{}"));
     const [date, setDay] = useState(nowDate);
     const [thema, setThema] = useState("cgv");
     const [img, setImg] = useState(emptyImg);
@@ -46,20 +63,22 @@ function Edit({ isEdit, id }) {
         comment: comment,
     };
 
-    function onSaveSeat(data) { setSeat(data); }
-    function onSaveDate(e) { setDay(e.target.value); }
-    function onSelectThema(e) { setThema(e.target.value); }
-    function onSaveLocation(e) { setLocation(e.target.value); }
-    function onSaveRoom(e) { setRoom(e.target.value); }
-    function onSaveNumber(e) { setNumber(e.target.value); }
-    function onSaveComment(e) { setComment(e.target.value); }
+    function onSaveSeat(data:string) { setSeat(data); }
+    function onSaveDate(e:React.ChangeEvent<HTMLInputElement>) { setDay(e.target.value); }
+    function onSelectThema(e:React.ChangeEvent<HTMLSelectElement>) { setThema(e.target.value); }
+    function onSaveLocation(e:React.ChangeEvent<HTMLInputElement>) { setLocation(e.target.value); }
+    function onSaveRoom(e:React.ChangeEvent<HTMLInputElement>) { setRoom(e.target.value); }
+    function onSaveNumber(e:React.ChangeEvent<HTMLInputElement>) { setNumber(e.target.value); }
+    function onSaveComment(e:React.ChangeEvent<HTMLTextAreaElement>) { setComment(e.target.value); }
 
-    function onImgUpload(e) {
+    function onImgUpload(e:React.ChangeEvent<HTMLInputElement>) {
         let reader = new FileReader();
-        if (e.target.files[0]) {
-            reader.readAsDataURL(e.target.files[0]);
+        const target = e.target;
+        const files = (target.files as FileList)[0];
+        if (files) {
+            reader.readAsDataURL(files);
             reader.onload = () => {
-                const previewImgUrl = reader.result;
+                const previewImgUrl= reader.result as string;
 
                 const fackImg = new Image();
                 fackImg.src = previewImgUrl;
@@ -67,7 +86,7 @@ function Edit({ isEdit, id }) {
                 fackImg.onload = () => {
                     const canvas = document.createElement("canvas");
                     let ctx = canvas.getContext("2d");
-                    ctx.drawImage(fackImg, 0, 0);
+                    ctx!.drawImage(fackImg, 0, 0);
 
                     const MAX_WIDTH = 300;
                     const MAX_HEIGHT = 420;
@@ -89,7 +108,7 @@ function Edit({ isEdit, id }) {
                         canvas.width = width;
                         canvas.height = height;
 
-                        ctx.drawImage(fackImg, 0, 0, canvas.width, canvas.height);
+                        ctx!.drawImage(fackImg, 0, 0, canvas.width, canvas.height);
 
                         const dataurl = canvas.toDataURL("image/png");
                         setImg(dataurl);
@@ -115,7 +134,7 @@ function Edit({ isEdit, id }) {
                     await navigate(`/`);
                 }
                 else if (isEdit) {
-                    await setDiary([mydiary, ...diary.filter((item, index) => index !== id)]);
+                    await setDiary([mydiary, ...diary.filter((_item:object, index:number) => index !== id)]);
                     await navigate(`/show_movie_diary/1`);
                 }
             } catch (e) {
@@ -128,14 +147,15 @@ function Edit({ isEdit, id }) {
     useLayoutEffect(() => {
         if (isEdit) {
             async function newDatas() {
-                await setDay(diary[id].date);
-                await setSeat(diary[id].seat);
-                await setImg(diary[id].img);
-                await setThema(diary[id].thema);
-                await setLocation(diary[id].location);
-                await setRoom(diary[id].room);
-                await setNumber(diary[id].number);
-                await setComment(diary[id].comment);
+                const thisId=(id)?id:0;
+                await setDay(diary[thisId].date);
+                await setSeat(diary[thisId].seat);
+                await setImg(diary[thisId].img);
+                await setThema(diary[thisId].thema);
+                await setLocation(diary[thisId].location);
+                await setRoom(diary[thisId].room);
+                await setNumber(diary[thisId].number);
+                await setComment(diary[thisId].comment);
             }
             newDatas();
         }
@@ -170,14 +190,14 @@ function Edit({ isEdit, id }) {
                 <section>
                     {thema !== "home" && <MovieTheater event={true} myseat={seat} onSeat={onSaveSeat} thema={thema} />}
                     <Info $thema={thema}>
-                        <input autoComplete="off" type="text" value={location} name="location" size="10" placeholder="위치" className={thema} onChange={onSaveLocation} />
-                        {thema !== "home" && <input autoComplete="off" type="text" value={room} name="room" size="10" placeholder="영화관" className={thema} onChange={onSaveRoom} />}
-                        {thema !== "home" && <input autoComplete="off" type="text" value={number} name="number" size="10" placeholder="좌석번호" className={thema} onChange={onSaveNumber} />}
+                        <input autoComplete="off" type="text" value={location} name="location" size={10} placeholder="위치" className={thema} onChange={onSaveLocation} />
+                        {thema !== "home" && <input autoComplete="off" type="text" value={room} name="room" size={10} placeholder="영화관" className={thema} onChange={onSaveRoom} />}
+                        {thema !== "home" && <input autoComplete="off" type="text" value={number} name="number" size={10} placeholder="좌석번호" className={thema} onChange={onSaveNumber} />}
                     </Info>
                 </section>
             </Div>
             {/*value값을 줘서 max-length가 제대로 작동하지 못함. 임시방편으로 작성시에만 undefined로 수정, 수정기능에서는 다시 고려해야함*/}
-            <TextArea name="comment" value={!isEdit ? undefined : comment} maxLength="140" onChange={onSaveComment} />
+            <TextArea name="comment" value={!isEdit ? undefined : comment} maxLength={140} onChange={onSaveComment} />
             <TextNum $length={comment.length}>{comment.length}/140</TextNum>
         </AppDiv>
     );
@@ -229,7 +249,7 @@ const ImgButton = styled.div`
     margin-top:10px;
 `;
 
-const Info = styled.div`
+const Info = styled.div<ThemaColor>`
     margin-left:47px;
     margin-top: 10px;
     ${props => props.$thema === "home" && css`
@@ -251,7 +271,7 @@ const TextArea = styled.textarea`
     margin-top:10px;
 `;
 
-const MyButton = styled.div`
+const MyButton = styled.div<Buttonprops>`
     text-align:center;
     background-color:black;
     color:white;
@@ -271,7 +291,7 @@ const MyButton = styled.div`
     `}
 `;
 
-const TextNum = styled.div`
+const TextNum = styled.div<TextProps>`
     font-size:0.3rem;
     font-weight:900;
     position:absolute;

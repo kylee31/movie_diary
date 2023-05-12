@@ -2,7 +2,23 @@ import { useLayoutEffect, useState } from "react";
 import styled from "styled-components";
 import theater from "../db/data.json";
 
-function MovieTheater({ thema, onSeat, myseat, event }) {
+interface MovieTheaterInfo{
+    thema:string,
+    myseat:string,
+    event:boolean, 
+    onSeat? :(seatNumber:string)=>void
+}
+
+interface BoxProps{
+    $click:boolean
+}
+
+interface SeatProps{
+    $id:number,
+    $seat:boolean
+}
+
+function MovieTheater({ thema, onSeat, myseat, event }:MovieTheaterInfo) {
 
     const themaseat = thema.concat("seat");
     const [selectedSeat, setSelectedSeat] = useState(myseat);
@@ -16,18 +32,18 @@ function MovieTheater({ thema, onSeat, myseat, event }) {
             <Screen className={thema}>screen</Screen><br />
             <Table>
                 <tbody>
-                    {theater.data.map((seat, index) => {
+                    {theater.data.map((_seat:object, index:number) => {
                         return <tr key={index}>
-                            {theater.data[index].seat.map((seat) => {
+                            {theater.data[index].seat.map((seat:{id:number}) => {
                                 const thisSeat = String(index) + String(seat.id);
                                 return <Seat $id={seat.id} $seat={thisSeat === selectedSeat} key={thisSeat} className={themaseat} onClick={() => {
                                     if (selectedSeat === "") {
                                         setSelectedSeat(thisSeat);
-                                        onSeat(thisSeat);
+                                        if(onSeat) onSeat(thisSeat);
                                     }
                                     else {
                                         setSelectedSeat("");
-                                        onSeat("");
+                                        if(onSeat) onSeat("");
                                     }
                                 }} />
                             })}
@@ -41,7 +57,7 @@ function MovieTheater({ thema, onSeat, myseat, event }) {
 
 export default MovieTheater;
 
-const Box = styled.div`
+const Box = styled.div<BoxProps>`
     background-color:white;
     border-radius:20px;
     width:300px;
@@ -66,7 +82,7 @@ const Table = styled.table`
     margin:auto;
 `
 
-const Seat = styled.td`
+const Seat = styled.td<SeatProps>`
     display:inline-block;
     width:25px;
     height:25px;

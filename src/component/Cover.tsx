@@ -1,7 +1,17 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-function Cover({ loc }) {
+interface Loc{
+    loc:string
+}
+
+interface AppCoverProps{
+    //props임을 명시하기 위해 변수명 앞에 $붙이기
+    $title:boolean,
+    $loc:string
+}
+
+function Cover({ loc }:Loc) {
 
     //커버 이미지 만들기
     const [title, setTitle] = useState(true);
@@ -32,7 +42,7 @@ function Cover({ loc }) {
 
 export default Cover;
 
-const AppCover = styled.div`
+const AppCover = styled.div<AppCoverProps>`
   position:absolute;
   width:650px;
   height:500px;

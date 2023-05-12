@@ -4,15 +4,28 @@ import styled, { css } from "styled-components";
 import MovieTheater from "./MovieTheater";
 import html2canvas from "html2canvas";
 
+interface ThemaColor{
+  $thema?:string
+}
+
+interface SliderProps{
+  $right?:boolean,
+  $left?:boolean,
+  $show:boolean
+}
+
 function Show() {
   //슬라이드 버튼 없이 단독 아이템 클릭이 필요했을때 사용한 코드. useParams로 변경
   //const location = useLocation();
   //const id = location.state.id;
 
-  const [id, setId] = useState(useParams().id - 1);
+  const thisId=useParams() as {id:string};
+  const diaryId = parseInt(thisId.id) - 1;
+  const [id, setId] = useState(diaryId);
+
   const navigate = useNavigate();
 
-  const data = JSON.parse(localStorage.getItem("diary")) == null ? [] : JSON.parse(localStorage.getItem("diary"));
+  const data = JSON.parse(localStorage.getItem("diary")||"{}") == null ? [] : JSON.parse(localStorage.getItem("diary")||"{}");
   const mydata = data[id];
 
   function onUpdate() {
@@ -21,7 +34,7 @@ function Show() {
 
   function onRemove() {
     if (window.confirm("삭제하시겠습니까😮?")) {
-      const newdata = data.filter((e, index) => {
+      const newdata = data.filter((_e:object, index:number) => {
         return index !== id
       })
       localStorage.setItem("diary", JSON.stringify(newdata));
@@ -29,7 +42,7 @@ function Show() {
     }
   }
 
-  function onSave(uri, filename) {
+  function onSave(uri:string, filename:string) {
     var link = document.createElement("a");
     document.body.appendChild(link);
     link.href = uri;
@@ -40,7 +53,7 @@ function Show() {
   //html2canvas
   function onCapture() {
     if (window.confirm("일기를 저장하시겠습니까🙂?")) {
-      html2canvas(document.getElementById("capture")).then(canvas => {
+      html2canvas(document.getElementById("capture") as HTMLElement).then(canvas => {
         onSave(canvas.toDataURL("image/png"), `movie-diary${id + 1}.png`);
       });
     }
@@ -113,7 +126,7 @@ const ShowHeader = styled.header`
   }
 `;
 
-const Div = styled.div`
+const Div = styled.div<ThemaColor>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -122,7 +135,7 @@ const Div = styled.div`
   margin-top:${props => props.$thema === "home" ? "30px" : 0};
 `;
 
-const Poster = styled.section`
+const Poster = styled.section<ThemaColor>`
   margin-left:${props => props.$thema === "home" ? "38px" : 0};
   img{
     width: 200px;
@@ -152,9 +165,10 @@ const Info = styled.div`
   border-radius: 10px;
   border: 2px solid lightgrey;
   padding:10px;
+  word-break:break-all;
 `;
 
-const MySpan = styled.span`
+const MySpan = styled.span<ThemaColor>`
   display:flex;
   justify-content:center;
   align-items:center;
@@ -191,7 +205,7 @@ const SaveButton = styled.div`
   margin-left:300px;
 `;
 
-const Slider = styled.span`
+const Slider = styled.span<SliderProps>`
   position:absolute;
   font-size:1.8rem;
   cursor:pointer;

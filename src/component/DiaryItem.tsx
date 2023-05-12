@@ -1,7 +1,14 @@
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
-function DiaryItem({ id, thema, img, date }) {
+interface items{
+    id:number,
+    thema:string,
+    img:string,
+    date:string
+}
+
+function DiaryItem({ id, thema, img, date }:items) {
 
     const navigate = useNavigate();
     async function onClick() {

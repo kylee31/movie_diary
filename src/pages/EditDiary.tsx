@@ -3,7 +3,8 @@ import Edit from "../component/Edit";
 
 function EditDiary() {
 
-    const data = useParams().id - 1;
+    const {id}=useParams() as {id:string};
+    const data = parseInt(id) - 1;
 
     return (
         <Edit isEdit={true} id={data} />

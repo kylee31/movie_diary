@@ -6,20 +6,11 @@ import ShowDiary from './pages/ShowDiary';
 import EditDiary from './pages/EditDiary';
 import Cover from './component/Cover';
 
-const Container = styled.div`
-  height:100vh;
-  width:100vw;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-`;
-
 function App() {
 
   const loc = window.location.hash;
 
   return (
-    <>
       <Container>
         <Cover loc={loc} />
         <HashRouter>
@@ -31,8 +22,15 @@ function App() {
           </Routes>
         </HashRouter>
       </Container>
-    </>
   );
 }
 
 export default App;
+
+const Container = styled.div`
+  height:100vh;
+  width:100vw;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+`;
