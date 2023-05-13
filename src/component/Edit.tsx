@@ -191,7 +191,7 @@ function Edit({ isEdit, id }:isEdit) {
                     {thema !== "home" && <MovieTheater event={true} myseat={seat} onSeat={onSaveSeat} thema={thema} />}
                     <Info $thema={thema}>
                         <input autoComplete="off" type="text" value={location} name="location" size={10} placeholder="위치" className={thema} onChange={onSaveLocation} />
-                        {thema !== "home" && <input autoComplete="off" type="text" value={room} name="room" size={10} placeholder="영화관" className={thema} onChange={onSaveRoom} />}
+                        {thema !== "home" && <input autoComplete="off" type="text" value={room} name="room" size={10} placeholder="상영관" className={thema} onChange={onSaveRoom} />}
                         {thema !== "home" && <input autoComplete="off" type="text" value={number} name="number" size={10} placeholder="좌석번호" className={thema} onChange={onSaveNumber} />}
                     </Info>
                 </section>
