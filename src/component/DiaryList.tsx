@@ -9,7 +9,7 @@ interface DataInfo{
 
 function DiaryList() {
     //localstorage아이템 불러오기
-    const data = JSON.parse(localStorage.getItem("diary")||"{}") == null ? [] : JSON.parse(localStorage.getItem("diary")||"{}");
+    const data = JSON.parse(`${localStorage.getItem("diary")}`)==null? [] : JSON.parse(`${localStorage.getItem("diary")}`);
 
     return (
         <Box className="box">

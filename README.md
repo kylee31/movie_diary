@@ -38,12 +38,12 @@
 
 ## 호스팅 링크
 
-[Movie Diary](https://kylee31.github.io/movie_diary/)
+[🎬Movie Diary](https://kylee31.github.io/movie_diary/)
 <br><br>
 
 ## 실행 영상 (youtube)
 
-[![movie diary](https://img.youtube.com/vi/W1zmduWOr4I/0.jpg)](https://www.youtube.com/W1zmduWOr4I)
+[![movie diary](https://img.youtube.com/vi/W1zmduWOr4I/0.jpg)](https://youtu.be/W1zmduWOr4I)
 <br><br>
 
 ## 프로젝트 개발환경

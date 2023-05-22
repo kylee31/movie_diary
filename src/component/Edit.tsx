@@ -40,7 +40,7 @@ function Edit({ isEdit, id }:isEdit) {
         return `${year}-${month}-${day}`;
     };
 
-    const [diary, setDiary] = useState(JSON.parse(localStorage.getItem("diary")||"{}") == null ? [] : JSON.parse(localStorage.getItem("diary")||"{}"));
+    const [diary, setDiary] = useState( JSON.parse(`${localStorage.getItem("diary")}`)==null? [] : JSON.parse(`${localStorage.getItem("diary")}`));
     const [date, setDay] = useState(nowDate);
     const [thema, setThema] = useState("cgv");
     const [img, setImg] = useState(emptyImg);
