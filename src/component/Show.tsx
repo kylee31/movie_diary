@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import MovieTheater from "./MovieTheater";
 import html2canvas from "html2canvas";
+import { useDiaryDispatchContext, useDiaryValueContext } from "../context/DiaryProvider";
 
 interface ThemaColor{
   $thema?:string
@@ -25,8 +26,11 @@ function Show() {
 
   const navigate = useNavigate();
 
-  const data = JSON.parse(localStorage.getItem("diary")||"{}") == null ? [] : JSON.parse(localStorage.getItem("diary")||"{}");
-  const mydata = data[id];
+  //const data = JSON.parse(`${localStorage.getItem("diary")}`) == null ? [] : JSON.parse(`${localStorage.getItem("diary")}`);
+  const diary=useDiaryValueContext();
+  const dispatch=useDiaryDispatchContext();
+
+  const mydata = diary[id];
 
   function onUpdate() {
     navigate(`/update_movie_diary/${id + 1}`);
@@ -34,10 +38,8 @@ function Show() {
 
   function onRemove() {
     if (window.confirm("삭제하시겠습니까😮?")) {
-      const newdata = data.filter((_e:object, index:number) => {
-        return index !== id
-      })
-      localStorage.setItem("diary", JSON.stringify(newdata));
+      const idx=mydata.idx;
+      dispatch({type:'DELETE',idx});
       navigate("/");
     }
   }
@@ -98,7 +100,7 @@ function Show() {
         <Button onClick={onRemove}>삭제</Button>
       </SaveButton>
       <Slider $show={id === 0} $right={true} onClick={onPrev}>◀</Slider>
-      <Slider $show={id === data.length - 1} $left={true} onClick={onNext}>▶</Slider>
+      <Slider $show={id === diary.length - 1} $left={true} onClick={onNext}>▶</Slider>
     </>
   );
 }

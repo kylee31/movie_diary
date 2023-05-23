@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import DiaryList from "../component/DiaryList";
 import { useNavigate } from "react-router-dom";
+import {useState} from "react";
 
 function Main() {
 
@@ -9,13 +10,23 @@ function Main() {
     navigate(`/write_movie_diary/`);
   }
 
+  const [isSort,setIsSort]=useState("new");
+
+  function onSort(e:React.ChangeEvent<HTMLSelectElement>){
+    setIsSort(e.target.value);
+  }
+
   return (
     <AppDiv>
       <Head>
         <Logo>🎬영화일기</Logo>
+        <Select value={isSort} onChange={onSort}>
+          <option value="new">최신 순</option>
+          <option value="old">오래된 순</option>
+        </Select>
         <Button onClick={onClick}>일기 작성</Button>
       </Head>
-      <DiaryList />
+      <DiaryList isSort={isSort}/>
     </AppDiv>
   );
 }
@@ -38,6 +49,12 @@ const Logo = styled.span`
     font-size:1.3rem;
     font-weight:900;
 `;
+
+const Select=styled.select`
+    float:right;
+    height:30px;
+    margin-left:10px;
+`
 
 const Button = styled.button`
     float:right;

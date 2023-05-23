@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import MovieTheater from "./MovieTheater";
 import emptyImg from "../db/emptyImg.png";
 import { useLayoutEffect } from "react";
+import { useDiaryDispatchContext, useDiaryIdxContext, useDiaryValueContext } from "../context/DiaryProvider";
 
 interface isEdit{
     isEdit?:boolean,
@@ -40,7 +41,11 @@ function Edit({ isEdit, id }:isEdit) {
         return `${year}-${month}-${day}`;
     };
 
-    const [diary, setDiary] = useState( JSON.parse(`${localStorage.getItem("diary")}`)==null? [] : JSON.parse(`${localStorage.getItem("diary")}`));
+    //const [diary, setDiary] = useState( JSON.parse(`${localStorage.getItem("diary")}`)==null? [] : JSON.parse(`${localStorage.getItem("diary")}`));
+    const diary=useDiaryValueContext();
+    const idx=useDiaryIdxContext();
+    const dispatch=useDiaryDispatchContext();
+
     const [date, setDay] = useState(nowDate);
     const [thema, setThema] = useState("cgv");
     const [img, setImg] = useState(emptyImg);
@@ -52,7 +57,12 @@ function Edit({ isEdit, id }:isEdit) {
 
     const themaBackground = thema.concat("Background");
 
-    const mydiary = {
+    //id를 사용하지 않아도 되는 속성으로 만들기 위해 ?를 붙였고, undefined가 될 수 있어서 오류 발생.
+    //아래와 같이 id가 undefiend일 때 0으로 만들어줬다.
+    const isId=id!==undefined?id:0;
+
+    const diaryItems = {
+        idx:isEdit?diary[isId].idx:idx.current,
         date: date,
         thema: thema,
         img: img,
@@ -130,12 +140,13 @@ function Edit({ isEdit, id }:isEdit) {
         if (window.confirm(`${isEdit ? "수정" : "저장"}하시겠습니까🙂?`)) {
             try {
                 if (!isEdit) {
-                    (diary == null) ? await setDiary([mydiary]) : await setDiary([mydiary, ...diary]);
+                    dispatch({type:'CREATE',diaryItems});
+                    idx.current+=1;
                     await navigate(`/`);
                 }
                 else if (isEdit) {
-                    await setDiary([mydiary, ...diary.filter((_item:object, index:number) => index !== id)]);
-                    await navigate(`/show_movie_diary/1`);
+                    dispatch({type:'EDIT',diaryItems});
+                    await navigate(`/show_movie_diary/${isId+1}`);
                 }
             } catch (e) {
                 console.log(e);
@@ -159,8 +170,7 @@ function Edit({ isEdit, id }:isEdit) {
             }
             newDatas();
         }
-        localStorage.setItem("diary", JSON.stringify(diary));
-    }, [isEdit, diary, id]);
+    }, []);
 
     return (
         <AppDiv className={themaBackground}>
