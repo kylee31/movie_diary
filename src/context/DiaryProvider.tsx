@@ -13,6 +13,7 @@ interface DiaryItem{
 }
 
 type Action=
+    | {type:'SORT',data:DiaryItem[]}
     | {type:'READ',diary:DiaryItem[]}
     | {type:'CREATE',diaryItems:DiaryItem}
     | {type:'EDIT',diaryItems:DiaryItem}
@@ -25,6 +26,10 @@ function reducer(state:DiaryItem[],action:Action){
     switch(action.type){
         case 'READ':{
             return action.diary
+        }
+        case 'SORT':{
+            newState=action.data;
+            break;
         }
         case 'CREATE':{
             newState=[action.diaryItems,...state];
@@ -57,7 +62,7 @@ function DiaryProvider({children}:{children:React.ReactNode}){
 
     const initItems=isEmpty?[]:JSON.parse(`${localStorage.getItem('diary')}`);
     //고유 idx - 서비스 접속 시 저장된 데이터에서 불러오기 (sort에 사용 - 최신순, 오래된순)
-    const initIdx=isEmpty?1:JSON.parse(`${localStorage.getItem('diary')}`)[0].idx+1
+    const initIdx=isEmpty?1:Math.max(JSON.parse(`${localStorage.getItem('diary')}`)[0].idx)+1
 
     //전역 상태(id 및 일기 내용) 관리
     const nextIdx=useRef(initIdx);

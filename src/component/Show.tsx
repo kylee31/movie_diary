@@ -20,6 +20,9 @@ function Show() {
   //const location = useLocation();
   //const id = location.state.id;
 
+  //useParams와 슬라이드 버튼을 활용하면 sort마다 데이터 순서변경이 일어나므로 
+  //localstorage에 업데이트(dispatch sort)해줘야 슬라이드 기능이 잘 동작함
+  //다른 방법이 없나?
   const thisId=useParams() as {id:string};
   const diaryId = parseInt(thisId.id) - 1;
   const [id, setId] = useState(diaryId);

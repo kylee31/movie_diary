@@ -10,7 +10,7 @@ function Main() {
     navigate(`/write_movie_diary/`);
   }
 
-  const [isSort,setIsSort]=useState("new");
+  const [isSort,setIsSort]=useState("write");
 
   function onSort(e:React.ChangeEvent<HTMLSelectElement>){
     setIsSort(e.target.value);
@@ -21,8 +21,9 @@ function Main() {
       <Head>
         <Logo>🎬영화일기</Logo>
         <Select value={isSort} onChange={onSort}>
-          <option value="new">최신 순</option>
-          <option value="old">오래된 순</option>
+          <option value="write">작성 순</option>
+          <option value="date">날짜 순</option>
+          <option value="thema">테마 순</option>
         </Select>
         <Button onClick={onClick}>일기 작성</Button>
       </Head>
