@@ -68,11 +68,6 @@ function DiaryProvider({children}:{children:React.ReactNode}){
     const nextIdx=useRef(initIdx);
     const [diaryItems,dispatch]=useReducer(reducer,initItems);
 
-    useEffect(()=>{
-        //id값으로 정렬 (최신순)
-        //diaryItems.sort((a,b)=>a.id-b.id)
-    },[])
-
     return (
         <DiaryDispatchContext.Provider value={dispatch}>
             <DiaryValueContext.Provider value={diaryItems}>

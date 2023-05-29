@@ -124,7 +124,7 @@ function Edit({ isEdit, id }:isEdit) {
                         setImg(dataurl);
                     }
                     else {
-                        console.log("바로 여기로")
+                        //console.log("바로 여기로")
                         setImg(previewImgUrl);
                     }
                 }
