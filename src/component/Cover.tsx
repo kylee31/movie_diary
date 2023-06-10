@@ -20,10 +20,6 @@ function Cover({ loc }:Loc) {
     const [count, setCount] = useState(0);
     let num = txt.length;
 
-    function onClick() {
-        setTitle(false);
-    }
-
     useEffect(() => {
         if (count < num) {
             setTimeout(() => {
@@ -31,10 +27,15 @@ function Cover({ loc }:Loc) {
                 setCount(count + 1);
             }, 200);
         }
+        else if(count===num){
+            setTimeout(()=>{
+                setTitle(false);
+            },800)
+        }
     }, [count, num, text]);
 
     return (
-        <AppCover onClick={onClick} $title={title} $loc={loc}>
+        <AppCover $title={title} $loc={loc}>
             <Title>{text}</Title>
         </AppCover>
     );
@@ -49,7 +50,6 @@ const AppCover = styled.div<AppCoverProps>`
   background-color:lightgrey;
   border-radius:50px;
   padding:20px;
-  cursor:pointer;
   display: ${props => (props.$title === true && props.$loc === "") ? "block" : "none"};
 `;
 
