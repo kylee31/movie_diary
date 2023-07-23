@@ -16,7 +16,7 @@ function App() {
         <HashRouter>
           <Routes>
             <Route index path="/" element={<Main />} />
-            <Route path="/write_movie_diary/" element={<WriteDiary />} />
+            <Route path="/write_movie_diary" element={<WriteDiary />} />
             <Route path="/show_movie_diary/:id" element={<ShowDiary />} />
             <Route path="/update_movie_diary/:id" element={<EditDiary />} />
           </Routes>

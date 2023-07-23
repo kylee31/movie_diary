@@ -25,7 +25,7 @@ function Cover({ loc }:Loc) {
             setTimeout(() => {
                 setText(text.concat(txt[count]));
                 setCount(count + 1);
-            }, 200);
+            }, 300);
         }
         else if(count===num){
             setTimeout(()=>{
