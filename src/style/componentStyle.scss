@@ -1,0 +1,324 @@
+//App, Cover 컴포넌트
+.appContainer{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.appCover{
+    position: absolute;
+    width: 650px;
+    height: 500px;
+    background-color: lightgrey;
+    border-radius: 50px;
+    padding: 20px;
+}
+
+.coverTitle{
+    text-align: center;
+    margin-top: 230px;
+    font-weight: 900;
+    font-size: 2rem;
+}
+
+//MovieTheater(영화좌석) 컴포넌트
+.theaterContainer{
+    background-color: white;
+    border-radius: 20px;
+    width: 300px;
+    height: 260px;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid grey;
+    margin-left: 50px;
+    pointer-events: auto;
+    &.click{
+        pointer-events:none;
+    }
+}
+
+.theaterScreen{
+    width: 230px;
+    height: 12px;
+    line-height: 12px;
+    color: white;
+    font-size: 0.6rem;
+    margin: auto;
+}
+
+.theaterTable{
+    margin: auto;
+}
+
+.theaterSeat{
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    border-radius: 5px;
+    margin: 2px;
+    margin-right: 0;
+    &.gap{
+        margin-right:15px;
+    }
+    &.seat{
+        background-color: gray;
+    }
+}
+
+//DiaryItem 컴포넌트
+.diaryItem{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 270px;
+    height: 180px;
+    border-radius: 15px;
+    margin: 20px;
+    color: white;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+#diaryImg{
+    width: 100px;
+    height: 140px;
+    margin-right: 30px;
+}
+
+//DiaryList 컴포넌트
+.diaryListContainer{
+    display: flex;
+    flex-flow: row wrap;
+    width: 650px;
+    height: 420px;
+    overflow: auto;
+    margin-left: 15px;
+}
+
+//Show 컴포넌트
+.showContainer{
+    width: 630px;
+    height: 480px;
+    border-radius: 50px;
+    background-color: rgb(250, 250, 250);
+    padding: 20px;
+    overflow: auto;
+}
+
+#showHeader{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.showLogo{
+    font-weight: 900;
+    margin-right: 485px;
+    text-decoration: none;
+    color: black;
+}
+
+.showDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 900;
+    margin-left: 14px;
+    margin-top: 0;
+    &.showDivMargin{
+        margin-top:30px;
+    }
+}
+
+.showPoster{
+    margin-left: 0;
+    img {
+      width: 200px;
+      height: 280px;
+    }
+    .date {
+      font-size: 1.6rem;
+      margin-left: 30px;
+    }
+    &.showPosterMargin{
+        margin-left:38px;
+    }
+}
+
+.showInfo{
+    display: flex;
+    justify-content: center;
+    margin-left: 38px;
+    margin-top: 5px;
+}
+
+.showInfoSpan{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 110px;
+    height: 30px;
+    text-align: center;
+    border-radius: 10px;
+    margin: 3px;
+}
+
+.showHomeSpan{
+    position: absolute;
+    margin-top: 125px;
+    margin-left: 200px;
+}
+
+.showInfoText{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 900;
+    margin: 5px auto;
+    width: 580px;
+    height: 75px;
+    border-radius: 10px;
+    border: 2px solid lightgrey;
+    padding: 10px;
+    word-break: break-all;
+}
+
+.showSaveButton{
+    position: absolute;
+    margin-bottom: 450px;
+    margin-left: 300px;
+}
+.showButton{
+    text-align: center;
+    background-color: black;
+    color: white;
+    font-weight: 900;
+    width: 80px;
+    height: 30px;
+    border-radius: 10px;
+    border: 0;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.showSlider{
+    position:absolute;
+    font-size:1.8rem;
+    cursor:pointer;
+    margin-right:0;
+    margin-left:0;
+    visibility: visible;
+    &.right{
+        margin-right:620px;
+    }
+    &.left{
+        margin-left:620px
+    }
+    &.btnShow{
+        visibility: hidden;
+    }
+}
+
+//Edit 컴포넌트
+.editContainer{
+    width: 630px;
+    height: 480px;
+    background-color: rgb(250, 250, 250);
+    border-radius: 50px;
+    padding: 20px;
+}
+
+#editHeader{
+    display: flex;
+    justify-content: center;
+}
+
+.editLogo{
+    font-weight: 900;
+    margin-right: 110px;
+    margin-left: 10px;
+    text-decoration: none;
+    color: black;
+}
+
+.editLabel{
+    font-weight: 900;
+    font-size: 1.1rem;
+    margin-right: 10px;
+}
+
+.editDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+}
+
+.editImg{
+    width: 200px;
+    height: 280px;
+}
+
+.editImgButton{
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+
+.editInfo{
+    margin-left: 47px;
+    margin-top: 10px;
+}
+
+.editHomeInfo{
+    position: absolute;
+    margin-top: 132px;
+    margin-left: 80px;
+}
+
+.editButton{
+    text-align: center;
+    background-color: black;
+    color: white;
+    font-weight: 900;
+    width: 95px;
+    height: 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.editBtnPrimary{
+    width: 50px;
+    margin-left: 10px;
+}
+
+.editTextArea{
+    display: flex;
+    margin: auto;
+    width: 600px;
+    height: 80px;
+    border: 2px solid lightgrey;
+    resize: none;
+    font-family: Arial;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.editTextNum{
+    font-size: 0.6rem;
+    font-weight: 900;
+    position: absolute;
+    margin-left: 575px;
+    color: red;
+    &.textLen{
+        color:gray;
+    }
+  
+}

@@ -1,0 +1,35 @@
+//Main 페이지 style
+.mainContainer{
+    width: 650px;
+    height: 500px;
+    box-shadow: 0 0 0 2px lightgrey inset;
+    border-radius: 50px;
+    padding: 20px;
+}
+
+.mainHead{
+    padding: 15px;
+}
+
+#logo{
+    font-size: 1.3rem;
+    font-weight: 900;
+}
+
+.optionSelect{
+    float: right;
+    height: 30px;
+    margin-left: 10px;
+}
+
+.createButton{
+    float: right;
+    width: 100px;
+    height: 30px;
+    background-color: black;
+    color: white;
+    border: 0;
+    border-radius: 10px;
+    font-weight: 900;
+    cursor: pointer;
+}
