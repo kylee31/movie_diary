@@ -1,0 +1,87 @@
+$color-cgv:#E41A12;
+$color-lotte:#c53535;
+$color-mega:#3d2a76;
+$color-inde:#f4d322;
+$color-home:#007900;
+$white:#ffffff;
+$hover-seat:rgb(105, 105, 105);
+
+@mixin set-theme($bg-color){
+    background-color:$bg-color;
+    font-weight:900;
+}
+
+@mixin thema-border($border-color){
+    border:10px solid $border-color;
+}
+
+.cgv{
+    @include set-theme($color-cgv);
+}
+.cgvseat{
+    @include set-theme($color-cgv);
+    &:hover{
+        background-color:$hover-seat;
+    }
+}
+
+.lotte{
+    @include set-theme($color-lotte);
+}
+.lotteseat{
+    @include set-theme($color-lotte);
+    &:hover{
+        background-color:$hover-seat;
+    }
+}
+
+.mega{
+    @include set-theme($color-mega);
+}
+.megaseat{
+    @include set-theme($color-mega);
+    color:$white;
+    &:hover{
+        background-color: $hover-seat;
+    }
+}
+
+.inde{
+    @include set-theme($color-inde);
+}
+.indeseat{
+    @include set-theme($color-inde);
+    &:hover{
+        background-color: $hover-seat;
+    }
+}
+
+.home{
+    background-color: $color-home;
+    color:$white;
+}
+
+.cgvBackground{
+    @include thema-border($color-cgv);
+}
+.lotteBackground{
+    @include thema-border($color-lotte);
+}
+.megaBackground{
+    @include thema-border($color-mega);
+}
+.indeBackground{
+    @include thema-border($color-inde);
+}
+.homeBackground{
+    @include thema-border($color-home);
+}
+
+input[type=text]{
+    text-align: center;
+    height:30px;
+    border:none;
+    border-radius: 10px;
+    font-weight: 900;
+    margin-right:5px;
+}
