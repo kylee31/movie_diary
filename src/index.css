@@ -1,0 +1,18 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+.box::-webkit-scrollbar{
+    width:5px;
+}
+
+/*스크롤바의 색상*/
+.box::-webkit-scrollbar-thumb {
+    background-color: rgb(120, 120, 120);
+    border-radius: 10px;
+}
+/*스크롤바 트랙 색상*/
+.box::-webkit-scrollbar-track {
+    background-color:rgb(229, 229, 229);
+}

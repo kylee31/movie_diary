@@ -3,16 +3,24 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import MovieTheater from "./MovieTheater";
 import html2canvas from "html2canvas";
-import { useDiaryDispatchContext, useDiaryValueContext } from "../context/DiaryProvider";
+import {
+  useDiaryDispatchContext,
+  useDiaryValueContext,
+} from "../context/DiaryProvider";
+import { Theme, ThemeColorType, themeColor } from "../styled/theme";
 
-interface ThemaColor{
-  $thema?:string
+interface ThemaLocation {
+  $thema?: string;
 }
 
-interface SliderProps{
-  $right?:boolean,
-  $left?:boolean,
-  $show:boolean
+interface ThemaColor extends Theme {
+  $thema?: string;
+}
+
+interface SliderProps {
+  $right?: boolean;
+  $left?: boolean;
+  $show: boolean;
 }
 
 function Show() {
@@ -20,18 +28,18 @@ function Show() {
   //const location = useLocation();
   //const id = location.state.id;
 
-  //useParams와 슬라이드 버튼을 활용하면 sort마다 데이터 순서변경이 일어나므로 
+  //useParams와 슬라이드 버튼을 활용하면 sort마다 데이터 순서변경이 일어나므로
   //localstorage에 업데이트(dispatch sort)해줘야 슬라이드 기능이 잘 동작함
   //다른 방법이 없나?
-  const thisId=useParams() as {id:string};
+  const thisId = useParams() as { id: string };
   const diaryId = parseInt(thisId.id) - 1;
   const [id, setId] = useState(diaryId);
 
   const navigate = useNavigate();
 
   //const data = JSON.parse(`${localStorage.getItem("diary")}`) == null ? [] : JSON.parse(`${localStorage.getItem("diary")}`);
-  const diary=useDiaryValueContext();
-  const dispatch=useDiaryDispatchContext();
+  const diary = useDiaryValueContext();
+  const dispatch = useDiaryDispatchContext();
 
   const mydata = diary[id];
 
@@ -41,13 +49,13 @@ function Show() {
 
   function onRemove() {
     if (window.confirm("삭제하시겠습니까😮?")) {
-      const idx=mydata.idx;
-      dispatch({type:'DELETE',idx});
+      const idx = mydata.idx;
+      dispatch({ type: "DELETE", idx });
       navigate("/");
     }
   }
 
-  function onSave(uri:string, filename:string) {
+  function onSave(uri: string, filename: string) {
     var link = document.createElement("a");
     document.body.appendChild(link);
     link.href = uri;
@@ -58,9 +66,11 @@ function Show() {
   //html2canvas
   function onCapture() {
     if (window.confirm("일기를 저장하시겠습니까🙂?")) {
-      html2canvas(document.getElementById("capture") as HTMLElement).then(canvas => {
-        onSave(canvas.toDataURL("image/png"), `movie-diary${id + 1}.png`);
-      });
+      html2canvas(document.getElementById("capture") as HTMLElement).then(
+        (canvas) => {
+          onSave(canvas.toDataURL("image/png"), `movie-diary${id + 1}.png`);
+        }
+      );
     }
   }
 
@@ -77,9 +87,11 @@ function Show() {
 
   return (
     <>
-      <AppDiv id="capture" className={mydata.thema.concat("Background")}>
+      <AppDiv id="capture" $theme={mydata.thema}>
         <ShowHeader>
-          <Link to="/" className="logo">🎬영화일기</Link>
+          <Link to="/" className="logo">
+            🎬영화일기
+          </Link>
         </ShowHeader>
         <Div $thema={mydata.thema}>
           <Poster $thema={mydata.thema}>
@@ -87,11 +99,23 @@ function Show() {
             <div className="date">{mydata.date}</div>
           </Poster>
           <section>
-            {mydata.thema !== "home" && <MovieTheater event={false} myseat={mydata.seat} thema={mydata.thema} />}
+            {mydata.thema !== "home" && (
+              <MovieTheater
+                event={false}
+                myseat={mydata.seat}
+                thema={mydata.thema}
+              />
+            )}
             <Information>
-              <MySpan className={mydata.thema} $thema={mydata.thema}>{mydata.location}</MySpan>
-              {mydata.thema !== "home" && <MySpan className={mydata.thema}>{mydata.room}</MySpan>}
-              {mydata.thema !== "home" && <MySpan className={mydata.thema}>{mydata.number}</MySpan>}
+              <MySpan $theme={mydata.thema} $thema={mydata.thema}>
+                {mydata.location}
+              </MySpan>
+              {mydata.thema !== "home" && (
+                <MySpan $theme={mydata.thema}>{mydata.room}</MySpan>
+              )}
+              {mydata.thema !== "home" && (
+                <MySpan $theme={mydata.thema}>{mydata.number}</MySpan>
+              )}
             </Information>
           </section>
         </Div>
@@ -102,28 +126,34 @@ function Show() {
         <Button onClick={onUpdate}>수정</Button>
         <Button onClick={onRemove}>삭제</Button>
       </SaveButton>
-      <Slider $show={id === 0} $right={true} onClick={onPrev}>◀</Slider>
-      <Slider $show={id === diary.length - 1} $left={true} onClick={onNext}>▶</Slider>
+      <Slider $show={id === 0} $right={true} onClick={onPrev}>
+        ◀
+      </Slider>
+      <Slider $show={id === diary.length - 1} $left={true} onClick={onNext}>
+        ▶
+      </Slider>
     </>
   );
 }
 
 export default Show;
 
-const AppDiv = styled.div`
-  width:630px;
-  height:480px;
-  border-radius:50px;
-  background-color:rgb(250,250,250);
-  padding:20px;
-  overflow:auto;
+const AppDiv = styled.div<Theme>`
+  width: 630px;
+  height: 480px;
+  border-radius: 50px;
+  background-color: rgb(250, 250, 250);
+  padding: 20px;
+  overflow: auto;
+  border: 10px solid
+    ${(props) => themeColor[props.$theme as keyof ThemeColorType]};
 `;
 
 const ShowHeader = styled.header`
   display: flex;
   justify-content: center;
-  margin-bottom:25px;
-  .logo{
+  margin-bottom: 25px;
+  .logo {
     font-weight: 900;
     margin-right: 485px;
     text-decoration: none;
@@ -131,23 +161,23 @@ const ShowHeader = styled.header`
   }
 `;
 
-const Div = styled.div<ThemaColor>`
+const Div = styled.div<ThemaLocation>`
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight:900;
-  margin-left:14px;
-  margin-top:${props => props.$thema === "home" ? "30px" : 0};
+  font-weight: 900;
+  margin-left: 14px;
+  margin-top: ${(props) => (props.$thema === "home" ? "30px" : 0)};
 `;
 
-const Poster = styled.section<ThemaColor>`
-  margin-left:${props => props.$thema === "home" ? "38px" : 0};
-  img{
+const Poster = styled.section<ThemaLocation>`
+  margin-left: ${(props) => (props.$thema === "home" ? "38px" : 0)};
+  img {
     width: 200px;
     height: 280px;
   }
-  .date{
-    font-size:1.6rem;
+  .date {
+    font-size: 1.6rem;
     margin-left: 30px;
   }
 `;
@@ -155,66 +185,69 @@ const Poster = styled.section<ThemaColor>`
 const Information = styled.div`
   display: flex;
   justify-content: center;
-  margin-left:38px;
-  margin-top:5px;
+  margin-left: 38px;
+  margin-top: 5px;
 `;
 
 const Info = styled.div`
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-weight:900;
-  margin:5px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 900;
+  margin: 5px auto;
   width: 580px;
   height: 75px;
   border-radius: 10px;
   border: 2px solid lightgrey;
-  padding:10px;
-  word-break:break-all;
+  padding: 10px;
+  word-break: break-all;
 `;
 
 const MySpan = styled.span<ThemaColor>`
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  width:110px;
-  height:30px;
-  text-align:center;
-  border-radius:10px;
-  margin:3px;
-  ${props =>
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 110px;
+  height: 30px;
+  text-align: center;
+  border-radius: 10px;
+  margin: 3px;
+  background-color: ${(props) =>
+    themeColor[props.$theme as keyof ThemeColorType]};
+  font-weight: 900;
+  ${(props) =>
     props.$thema === "home" &&
     css`
-      position:absolute;
-      margin-top:125px;
-      margin-left:200px;
+      position: absolute;
+      margin-top: 125px;
+      margin-left: 200px;
     `}
 `;
 
 const Button = styled.button`
-  text-align:center;
-  background-color:black;
-  color:white;
-  font-weight:900;
-  width:80px;
-  height:30px;
-  border-radius:10px;
-  border:0;
-  margin-left:10px;
-  cursor:pointer;
+  text-align: center;
+  background-color: black;
+  color: white;
+  font-weight: 900;
+  width: 80px;
+  height: 30px;
+  border-radius: 10px;
+  border: 0;
+  margin-left: 10px;
+  cursor: pointer;
 `;
 
 const SaveButton = styled.div`
-  position:absolute;
-  margin-bottom:450px;
-  margin-left:300px;
+  position: absolute;
+  margin-bottom: 450px;
+  margin-left: 300px;
 `;
 
 const Slider = styled.span<SliderProps>`
-  position:absolute;
-  font-size:1.8rem;
-  cursor:pointer;
-  margin-right: ${props => props.$right ? "620px" : 0};
-  margin-left: ${props => props.$left ? "620px" : 0};
-  visibility:${props => props.$show ? "hidden" : "visible"};
+  position: absolute;
+  font-size: 1.8rem;
+  cursor: pointer;
+  margin-right: ${(props) => (props.$right ? "620px" : 0)};
+  margin-left: ${(props) => (props.$left ? "620px" : 0)};
+  visibility: ${(props) => (props.$show ? "hidden" : "visible")};
 `;
