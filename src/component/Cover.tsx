@@ -9,8 +9,9 @@ function Cover({ loc }: Loc) {
   //커버 이미지 만들기
   const [title, setTitle] = useState(true);
   const [text, setText] = useState("🎬");
-  const txt = "영화일기";
   const [count, setCount] = useState(0);
+
+  const txt = "영화일기";
   let num = txt.length;
 
   useEffect(() => {
