@@ -21,7 +21,6 @@ function DiaryList({ isSort }: SortData) {
   //sortData에 따라 값이 변경되지만 localstorage에 저장되지 않고 dispatch시에 localstorage setItem으로 저장된다
   //create에서 newState=[action.diaryItems,...state];로 생성되는 새로운 값을 맨 앞에 저장했기 때문에 오류 발생 x
   const [sortData, setSortData] = useState([...data]);
-
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
@@ -46,8 +45,8 @@ function DiaryList({ isSort }: SortData) {
       data.sort((a, b) => a.thema.localeCompare(b.thema));
       setSortData([...data].sort((a, b) => a.thema.localeCompare(b.thema)));
     }
-    setSearchParams({ sort: isSort });
     dispatch({ type: "SORT", data });
+    setSearchParams({ sort: isSort });
   }, [isSort]);
 
   return (

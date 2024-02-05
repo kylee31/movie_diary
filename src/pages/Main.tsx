@@ -1,6 +1,6 @@
 import DiaryList from "../component/DiaryList";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLayoutEffect, useState } from "react";
 import "../style/pageStyle.scss";
 
 function Main() {
@@ -9,11 +9,17 @@ function Main() {
     navigate(`/write_movie_diary/`);
   }
 
+  const [searchParams] = useSearchParams();
+  const keyWord = searchParams.get("sort");
   const [isSort, setIsSort] = useState("write");
 
   function onSort(e: React.ChangeEvent<HTMLSelectElement>) {
     setIsSort(e.target.value);
   }
+
+  useLayoutEffect(() => {
+    if (keyWord !== null) setIsSort(keyWord);
+  }, []);
 
   return (
     <div className="mainContainer">
