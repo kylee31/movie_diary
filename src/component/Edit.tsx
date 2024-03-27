@@ -10,6 +10,7 @@ import {
   useDiaryIdxContext,
   useDiaryValueContext,
 } from "../context/DiaryProvider";
+import FileResizer from "react-image-file-resizer";
 
 interface isEdit {
   isEdit?: boolean;
@@ -86,55 +87,27 @@ function Edit({ isEdit, id }: isEdit) {
     setComment(e.target.value);
   }
 
-  function onImgUpload(e: React.ChangeEvent<HTMLInputElement>) {
-    let reader = new FileReader();
+  async function onImgUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const resizeFile = (file: File) =>
+      new Promise((resolve) => {
+        FileResizer.imageFileResizer(
+          file,
+          300,
+          420,
+          "PNG",
+          80,
+          0,
+          (uri) => {
+            resolve(uri);
+          },
+          "base64"
+        );
+      });
+
     const target = e.target;
     const files = (target.files as FileList)[0];
-    if (files) {
-      reader.readAsDataURL(files);
-      reader.onload = () => {
-        const previewImgUrl = reader.result as string;
-
-        const fackImg = new Image();
-        fackImg.src = previewImgUrl;
-        //로드되면 실행
-        fackImg.onload = () => {
-          const canvas = document.createElement("canvas");
-          let ctx = canvas.getContext("2d");
-          ctx!.drawImage(fackImg, 0, 0);
-
-          const MAX_WIDTH = 300;
-          const MAX_HEIGHT = 420;
-          let width = fackImg.width;
-          let height = fackImg.height;
-
-          if (width > 600 && height > 840) {
-            if (width > height) {
-              if (width > MAX_WIDTH) {
-                height *= MAX_WIDTH / width;
-                width = MAX_WIDTH;
-              }
-            } else {
-              if (height > MAX_HEIGHT) {
-                width *= MAX_HEIGHT / height;
-                height = MAX_HEIGHT;
-              }
-            }
-            canvas.width = width;
-            canvas.height = height;
-
-            ctx!.drawImage(fackImg, 0, 0, canvas.width, canvas.height);
-
-            const dataurl = canvas.toDataURL("image/png");
-            setImg(dataurl);
-          } else {
-            //console.log("바로 여기로")
-            setImg(previewImgUrl);
-          }
-        };
-      };
-      e.target.value = "";
-    }
+    const newImg = await resizeFile(files);
+    setImg(newImg);
   }
   function onRemoveImg() {
     setImg(emptyImg);
